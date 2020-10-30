@@ -80,7 +80,7 @@
 
 评论采取闭包表的方式保存。Comment中存储具体内容，而CommentTreePath中存储结点关系。
 
-具体可参考[向宇鑫的博客](http://www.xylonx.com/2020/10/14/%E9%97%AD%E5%8C%85%E8%A1%A8/)
+具体可参考[xylonx的博客](http://www.xylonx.com/2020/10/14/%E9%97%AD%E5%8C%85%E8%A1%A8/)
 
 ###### Comment
 
