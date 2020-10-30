@@ -1,0 +1,205 @@
+swagger: '2.0'
+info:
+  description: This is a API document about the 'tree hole' project.
+  version: 1.0.0
+  title: 树洞
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+host: 'localhost:6479'
+basePath: /
+tags:
+  - name: user
+    description: operations about the user
+  - name: article
+    description: operations about the article
+  - name: comment
+    description: operations about the comment
+  - name: thumbup
+    description: operations about the thumb up
+schemes:
+  - http
+paths:
+  /:
+    get:
+      tags:
+        - article
+      summary: get all articles by page
+      produces:
+        - applications/json
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ArticleSummary'
+  /article:
+    post:
+      tags:
+        - article
+      summary: post an article
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/PostArticle'
+      responses:
+        '200':
+          description: Ok
+    get:
+      tags:
+        - article
+      summary: get specific article
+      produces:
+        - application/json
+      parameters:
+        - name: artilce_id
+          in: query
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/SpecificArticle'
+  /user/register:
+    post:
+      tags:
+        - user
+      summary: register
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/UserRegister'
+      responses:
+        '200':
+          description: ''
+        '405':
+          description: Invalid input
+  /user/log:
+    post:
+      tags:
+        - user
+      summary: log in
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/UserLog'
+      responses:
+        '200':
+          description: log success
+        '401':
+          description: Unauthorized
+  /comment:
+    post:
+      tags:
+        - comment
+      summary: post a comment
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/Comment'
+      responses:
+        '200':
+          description: ok
+    get:
+      tags:
+        - comment
+      summary: get the specific comments
+      produces:
+        - applications/json
+      parameters:
+        - name: ancestor_id
+          in: query
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: ok
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Comment'
+  /thumbup:
+    post:
+      tags:
+        - thumbup
+      summary: thumb up an article or a comment
+      parameters:
+        - name: ancestor_id
+          in: query
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+definitions:
+  UserRegister:
+    type: object
+    properties:
+      name:
+        type: string
+      password:
+        type: string
+      email_address:
+        type: string
+  UserLog:
+    type: object
+    properties:
+      email_address:
+        type: string
+      password:
+        type: string
+  ArticleSummary:
+    type: object
+    properties:
+      title:
+        type: string
+      summary:
+        type: string
+      publisher:
+        type: integer
+      publish_time:
+        type: integer
+  SpecificArticle:
+    type: object
+    properties:
+      title:
+        type: string
+      content:
+        type: string
+      publisher:
+        type: integer
+      publish_time:
+        type: integer
+  PostArticle:
+    type: object
+    properties:
+      title:
+        type: string
+      content:
+        type: string
+  Comment:
+    type: object
+    properties:
+      comment_id:
+        type: integer
+      comment_content:
+        type: integer
+      ancestor_id:
+        type: integer
+      publisher_name:
+        type: string
