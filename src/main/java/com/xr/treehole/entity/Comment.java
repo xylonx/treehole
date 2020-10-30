@@ -14,8 +14,10 @@ public class Comment {
 
     @Id
     @GeneratedValue
-    private int CommentId;
+    private long CommentId;
 
-    private String Content;
+    private String CommentContent;
+
+    private int Depth;
 
 }

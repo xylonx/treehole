@@ -14,12 +14,17 @@ public class Article {
 
     @Id
     @GeneratedValue
-    private int ArticleId;
+    private long ArticleId;
 
-    private String Content;
+    private String ArticleTitle;
+
+    private String ArticleContent;
 
     private int ThumbUpNumber;
 
-    private int ThumbDownNumber;
+    private String ArticleSummary;
 
+    private long ArticlePublishTime;
+
+    private long ArticlePublisherId;
 }

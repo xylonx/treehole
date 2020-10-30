@@ -14,7 +14,7 @@ public class CommentTreePath {
 
     @Id
     @GeneratedValue
-    private String id;
+    private long CommentTreePathId;
 
     private int ancestorId;
 
