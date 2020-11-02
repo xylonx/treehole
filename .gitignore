@@ -36,3 +36,6 @@ build/
 .mvn/
 mvnw.cmd
 mvnw
+
+### project design ###
+策划.md
