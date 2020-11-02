@@ -70,37 +70,48 @@ paths:
           schema:
             $ref: '#/definitions/SpecificArticle'
   /user/register:
-    post:
+    get:
       tags:
         - user
-      summary: register
-      parameters:
-        - in: body
-          name: body
-          required: true
-          schema:
-            $ref: '#/definitions/UserRegister'
+      summary: route to the register page
       responses:
         '200':
           description: ''
         '405':
           description: Invalid input
-  /user/log:
-    post:
+  /user/login:
+    get:
       tags:
         - user
-      summary: log in
-      parameters:
-        - in: body
-          name: body
-          required: true
-          schema:
-            $ref: '#/definitions/UserLog'
+      summary: route to the login page
       responses:
         '200':
           description: log success
         '401':
           description: Unauthorized
+  /user:
+    post:
+      tags:
+      - user
+      summary: route to user homepage
+      parameters:
+      - name: status
+        in: query
+        type: string
+        enum: ['login', 'register']
+      
+      - in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/User'
+      responses:
+        '200':
+          description: log success
+  
+  
+  
+  
   /comment:
     post:
       tags:
@@ -147,7 +158,7 @@ paths:
         '200':
           description: Ok
 definitions:
-  UserRegister:
+  User:
     type: object
     properties:
       name:
@@ -156,13 +167,7 @@ definitions:
         type: string
       email_address:
         type: string
-  UserLog:
-    type: object
-    properties:
-      email_address:
-        type: string
-      password:
-        type: string
+  
   ArticleSummary:
     type: object
     properties:

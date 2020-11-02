@@ -1,6 +1,6 @@
 package com.xr.treehole.repositories;
 
-import com.xylon.springstudy.entity.Comment;
+import com.xr.treehole.entity.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
