@@ -53,10 +53,8 @@
 
 |     属性名     |   类型   |                           备注                           |
 | :------------: | :------: | :------------------------------------------------------: |
-|    `UserId`    |  `long`  |                   数据库用户唯一标识符                   |
-|   `UserName`   | `String` |                          用户名                          |
 |   `Password`   | `String` |                         用户密码                         |
-| `EmailAddress` | `String` | 用户邮箱，用于申请账号，同时亦可作为唯一标识符。用于登录 |
+| `EmailHash` | `String PrimaryKey` | 用户邮箱Hash，用于申请账号，同时亦可作为唯一标识符。用于登录 |
 
 因为树洞主打匿名，故用户仅保留最基本信息。无头像、个性签名等相关内容
 
@@ -70,7 +68,6 @@
 |    `ArticleTitle`    | `String` |                     文章标题                     |
 |   `ArticleContent`   | `String` |                     文章内容                     |
 |   `ThumbUpNumber`    |  `int`   |                      点赞数                      |
-|   `ArticleSummary`   | `String` | 文章摘要。用于在首页显示。<br />截取前50个字符。 |
 | `ArticlePublishTime` |  `long`  |          采用UnixTimeStamp方式存储时间           |
 | `ArticlePublisherId` |  `long`  |                    文章发布者                    |
 
