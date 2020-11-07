@@ -60,42 +60,38 @@
 
 
 
-##### 匿名贴：Article
+##### 内容：Node & NodeTreePath
 
-|        属性名        |   类型   |                       备注                       |
-| :------------------: | :------: | :----------------------------------------------: |
-|     `ArticleId`      |  `long`  |               数据库文章唯一标识符               |
-|    `ArticleTitle`    | `String` |                     文章标题                     |
-|   `ArticleContent`   | `String` |                     文章内容                     |
-|   `ThumbUpNumber`    |  `int`   |                      点赞数                      |
-| `ArticlePublishTime` |  `long`  |          采用UnixTimeStamp方式存储时间           |
-| `ArticlePublisherHs` | `String` |                 文章发布者Hash                   |
-
-
-
-##### 评论：Comment && CommentTreePath
-
-评论采取闭包表的方式保存。Comment中存储具体内容，而CommentTreePath中存储结点关系。
+采取闭包表的方式保存。Node中存储具体内容，而NodeTreePath中存储结点关系。
 
 具体可参考[xylonx的博客](http://www.xylonx.com/2020/10/14/%E9%97%AD%E5%8C%85%E8%A1%A8/)
 
-###### Comment
+具体语境下，Node可为匿名帖或评论。匿名贴深度定义为1
 
-|      属性名      |   类型   |                           备注                            |
-| :--------------: | :------: | :-------------------------------------------------------: |
-|   `CommentId`    |  `long`  |                   数据库评论唯一标识符                    |
-| `CommentContent` | `String` |                         评论内容                          |
-|     `Depth`      |  `int`   | 存储结点深度，用于得到直接的父子关系<br />定义文章深度为0 |
+###### Node
 
-###### CommentTreePath
-
-|       属性名        |  类型  |       备注       |
-| :-----------------: | :----: | :--------------: |
-| `CommenTreePathtId` | `long` | 数据库唯一标识符 |
-|    `AncestorId`     | `long` |    祖先结点ID    |
-|   `DescendantId`    | `long` |    后代结点ID    |
+|     属性名      |   类型   |                     备注                     |
+| :-------------: | :------: | :------------------------------------------: |
+|    `NodeId`     |  `long`  | 数据库唯一标识符；使用文章摘要、当前时间生成 |
+|   `NodeTitle`   | `String` |                     标题                     |
+|  `NodeContent`  | `String` |                     内容                     |
+| `ThumbUpNumber` |  `int`   |                    点赞数                    |
+|  `PublishTime`  |  `long`  |        采用UnixTimeStamp方式存储时间         |
+| `PublisherHash` | `String` |                文章发布者Hash                |
 
 
+
+###### NodeTreePath
+
+|      属性名       |  类型  |       备注       |
+| :---------------: | :----: | :--------------: |
+| `NodeTreePathtId` | `long` | 数据库唯一标识符 |
+|   `AncestorId`    | `long` |    祖先结点ID    |
+|  `DescendantId`   | `long` |    后代结点ID    |
+
+
+
+###### 
 
 #### Controller
 
