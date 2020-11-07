@@ -69,7 +69,7 @@
 |   `ArticleContent`   | `String` |                     文章内容                     |
 |   `ThumbUpNumber`    |  `int`   |                      点赞数                      |
 | `ArticlePublishTime` |  `long`  |          采用UnixTimeStamp方式存储时间           |
-| `ArticlePublisherId` |  `long`  |                    文章发布者                    |
+| `ArticlePublisherHs` | `String` |                 文章发布者Hash                   |
 
 
 
