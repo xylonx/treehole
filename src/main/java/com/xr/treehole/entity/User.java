@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 @Data
@@ -13,13 +14,14 @@ import javax.persistence.Id;
 public class User {
 
     @Id
-    @GeneratedValue
-    private long UserId;
+    private String emailHash;
 
-    private String UserName;
+    @Transient
+    private String emailAddress;
 
-    private String Password;
+    @Transient
+    private String userName;
 
-    private String EmailAddress;
+    private String password;
 
 }

@@ -66,18 +66,19 @@
 
 具体可参考[xylonx的博客](http://www.xylonx.com/2020/10/14/%E9%97%AD%E5%8C%85%E8%A1%A8/)
 
-具体语境下，Node可为匿名帖或评论。匿名贴深度定义为1
+具体语境下，Node可为匿名帖或评论。匿名贴深度定义为0
 
 ###### Node
 
 |     属性名      |   类型   |                     备注                     |
 | :-------------: | :------: | :------------------------------------------: |
-|    `NodeId`     |  `long`  | 数据库唯一标识符；使用文章摘要、当前时间生成 |
+|    `NodeId`     | `String` | 数据库唯一标识符；使用文章摘要、当前时间生成 |
 |   `NodeTitle`   | `String` |                     标题                     |
 |  `NodeContent`  | `String` |                     内容                     |
 | `ThumbUpNumber` |  `int`   |                    点赞数                    |
 |  `PublishTime`  |  `long`  |        采用UnixTimeStamp方式存储时间         |
 | `PublisherHash` | `String` |                文章发布者Hash                |
+|   `NodeDepth`   |  `int`   |                   结点深度                   |
 
 
 

@@ -1,23 +1,22 @@
 package com.xr.treehole.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
 @Data
 @NoArgsConstructor
-public class Comment {
+@AllArgsConstructor
+public class NodeTreePath {
 
     @Id
-    @GeneratedValue
-    private long CommentId;
+    private String id;
 
-    private String CommentContent;
+    private String ancestorId;
 
-    private int Depth;
-
+    private String descendantId;
 }

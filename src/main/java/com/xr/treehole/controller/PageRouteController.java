@@ -1,12 +1,20 @@
 package com.xr.treehole.controller;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class PageRouteController {
 
+    @GetMapping(path = "/index")
+    public ModelAndView routeIndex(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("index");
+        return modelAndView;
+    }
 
     /**
      * route to user register page
@@ -53,6 +61,16 @@ public class PageRouteController {
         ModelAndView modelAndView = new ModelAndView();
 
         modelAndView.setViewName("error");
+
+        return modelAndView;
+    }
+
+    @GetMapping(path = "/comment")
+    public ModelAndView routeCommentPage() {
+
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.setViewName("comment");
 
         return modelAndView;
     }

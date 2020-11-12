@@ -1,0 +1,19 @@
+.light-gray {
+    background-color: #e5e5e5;
+}
+
+.black-blue{
+    background-color:  #23374d;
+}
+
+.signHomepage{
+
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+
+    min-height: 688px;
+    height: calc(100% - 42px);
+
+    box-sizing: border-box;
+}

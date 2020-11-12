@@ -1,19 +1,41 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <title>Spring Security Example </title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../static/css/layout.css">
 </head>
 <body>
 
-<form th:action="@{/user(status='register')}" method="post">
-    <div><label> User Name: <input type="text" name="UserName"></label></div>
-    <div><label> User Email Address : <input type="text" name="EmailAddress"/> </label></div>
-    <div><label> Password: <input type="password" name="Password"/> </label></div>
-    <div><input type="submit" value="register"/></div>
-</form>
+<div class="head">
+    <div class="content-bar">
+        <ul class="bar-menu">
+            <li class="bar-menu"><a href="/"> 主页面 </a></li>
+            <li class="bar-menu"><a href="/user"> 个人中心 </a></li>
+        </ul>
+    </div>
+</div>
 
-<p th:if="${isUserExist != null && isUserExist}">
+<div class="log">
+    <form th:action="@{/user(status='register')}" method="post">
+        <div class="inputDiv">
+            <label> 用户名 <br/> <input type="text" name="UserName"></label>
+        </div>
+
+        <div class="inputDiv">
+            <label> 邮箱地址 <br/> <input type="text" name="EmailAddress"/> </label>
+        </div>
+
+        <div class="inputDiv">
+            <label> 密码 <br/> <input type="password" name="Password"/></label>
+        </div>
+
+        <div class="inputDiv">
+            <input type="submit" value="register"/></div>
+    </form>
+</div>
+
+<p th:if="${isUserExist != null && isUserExist}" class="returnInfo">
     the email has been register once. please change!
 </p>
 
