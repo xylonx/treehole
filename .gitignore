@@ -43,3 +43,7 @@ mvnw
 ### useless but not grabage Class ###
 ### in common, they are product of study the new technology ###
 /src/main/java/uselessButNotGarbage/
+
+### config ###
+src/main/resources/application.properties
+src/main/resources/config.properties
