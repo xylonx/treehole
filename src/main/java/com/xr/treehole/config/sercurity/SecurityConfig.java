@@ -1,33 +1,46 @@
 package com.xr.treehole.config.sercurity;
 
+import com.xr.treehole.middleware.jwt.JwtAuthorizationTokenFilter;
+import com.xr.treehole.service.SecurityUserDetailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    JwtAuthorizationTokenFilter jwtTokenFilter;
+
+    @Autowired
+    SecurityUserDetailService userDetailService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+//        http.authorizeRequests().anyRequest().permitAll();
+
         // ban the cross origin function
-        http.csrf().disable()
+        http.cors().disable().csrf().disable();
 
-                // form login config
-                .formLogin()
-                .loginPage("/user/login")   // default login page
-                .loginProcessingUrl("/user/login")  // default login url
-                .defaultSuccessUrl("/index")    //default success url
+        // Set session management to stateless
+        http = http.sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and();
 
-                .and()
-
-                // filter authorize requests
-                .authorizeRequests()
+        // filter authorize requests
+        http.authorizeRequests()
                 .antMatchers("/user/login").permitAll()
                 .antMatchers("/user/register").permitAll()
+                // FIXME: test interface
+                .antMatchers("/test").permitAll()
                 .anyRequest().authenticated();
+
+        http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
     }
 
@@ -36,4 +49,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/static/**");
     }
+
+
 }

@@ -1,19 +1,34 @@
 package com.xr.treehole.controller;
 
-import org.springframework.data.repository.query.Param;
+import com.xr.treehole.config.selfdef.MailConfig;
+import com.xr.treehole.middleware.jwt.JwtUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
+
 @Controller
 public class PageRouteController {
 
+    @Autowired
+    MailConfig mailConfig;
+
+    @Autowired
+    JwtUtils jwtUtils;
+
     @GetMapping(path = "/index")
-    public ModelAndView routeIndex(){
+    public ModelAndView routeIndex() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("index");
         return modelAndView;
+    }
+
+    @GetMapping(path = "/test")
+    public String routeTest() {
+        return "redirect:/index";
     }
 
     /**

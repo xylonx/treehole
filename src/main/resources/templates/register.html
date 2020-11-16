@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>Spring Security Example </title>
+    <title>register page</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="../static/css/layout.css">
 </head>
@@ -17,12 +17,8 @@
 </div>
 
 <div class="log">
-    <form th:action="@{/user(status='register')}" method="post">
-        <div class="inputDiv">
-            <label> 用户名 <br/> <input type="text" name="UserName"></label>
-        </div>
-
-        <div class="inputDiv">
+    <form th:action="@{/user/register}" method="post">
+                <div class="inputDiv">
             <label> 邮箱地址 <br/> <input type="text" name="EmailAddress"/> </label>
         </div>
 
@@ -35,9 +31,9 @@
     </form>
 </div>
 
-<p th:if="${isUserExist != null && isUserExist}" class="returnInfo">
-    the email has been register once. please change!
-</p>
+<!--<p th:if="${isUserExist != null && isUserExist}" class="returnInfo">-->
+<!--    the email has been register once. please change!-->
+<!--</p>-->
 
 </body>
 </html>

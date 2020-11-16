@@ -3,12 +3,9 @@ package com.xr.treehole.service;
 import com.xr.treehole.entity.User;
 import com.xr.treehole.repositories.UserRepository;
 import com.xr.treehole.util.Encrypt;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Service
@@ -18,7 +15,7 @@ public class UserService {
     UserRepository userRepository;
 
     public User saveUser(User user) {
-        user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+        user.setPassword(Encrypt.SecurityHash(user.getPassword()));
 
         String hashedEmail = Encrypt.Hashing(user.getEmailAddress());
         user.setEmailHash(hashedEmail);
@@ -44,7 +41,7 @@ public class UserService {
             return false;
         }
 
-        return BCrypt.checkpw(password, userInfo.getPassword());
+        return Encrypt.CheckSecurityHash(password, userInfo.getPassword());
     }
 
     public boolean isUserExist(String emailAddress) {

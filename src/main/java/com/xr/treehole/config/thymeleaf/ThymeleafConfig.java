@@ -1,5 +1,6 @@
 package com.xr.treehole.config.thymeleaf;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +14,7 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 @Configuration
 public class ThymeleafConfig extends WebMvcConfigurationSupport {
 
+    @Autowired
     private ApplicationContext applicationContext;
 
     @Override

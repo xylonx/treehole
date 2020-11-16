@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
+
+    <title>Index page</title>
+
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
@@ -17,6 +20,10 @@
 </head>
 
 <body>
+
+<p th:if="${token!=null}">
+    <label th:text="${token}">token</label>
+</p>
 
 <nav class="light-blue lighten-1" role="navigation">
 
