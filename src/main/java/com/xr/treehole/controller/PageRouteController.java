@@ -26,6 +26,13 @@ public class PageRouteController {
         return modelAndView;
     }
 
+    @GetMapping(path = "/user")
+    public ModelAndView routeUserHomepage(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("userHomepage");
+        return modelAndView;
+    }
+
     @GetMapping(path = "/test")
     public String routeTest() {
         return "redirect:/index";

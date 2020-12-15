@@ -35,8 +35,6 @@ public class JwtUtils {
 
     public String GenerateToken(Map<String, Object> claims) {
 
-
-
         return Jwts.builder()
                 .setClaims(claims)  // set claims
                 .signWith(secretKey)
@@ -46,8 +44,7 @@ public class JwtUtils {
 
     public Claims GetClaimsFromToken(String token) {
 
-        Key secretKey = new SecretKeySpec(jwtConfig.getSecret().getBytes(), SignatureAlgorithm.HS256.getJcaName());
-        Claims claims;
+       Claims claims;
         try {
             claims = Jwts.parserBuilder()
                     .setSigningKey(secretKey)
