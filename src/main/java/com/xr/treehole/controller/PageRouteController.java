@@ -22,14 +22,6 @@ public class PageRouteController {
     @Autowired
     JwtUtils jwtUtils;
 
-
-    @GetMapping(path = "/index")
-    public ModelAndView routeIndex() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("index");
-        return modelAndView;
-    }
-
     @GetMapping(path = "/")
     public String routeDefault() {
         return "redirect:/index";

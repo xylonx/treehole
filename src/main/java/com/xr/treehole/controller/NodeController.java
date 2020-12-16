@@ -1,12 +1,12 @@
 package com.xr.treehole.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.xr.treehole.service.NodeService;
 import com.xr.treehole.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,7 +27,15 @@ public class NodeController {
       }
       modelAndView.setViewName("node");
       modelAndView.addObject("node", node.get());
-      //modelAndView.addObject("node", node);
       return modelAndView;
   }
+
+    @GetMapping(path = "/index")
+    public ModelAndView routeIndex() {
+      ModelAndView modelAndView = new ModelAndView();
+      modelAndView.setViewName("index");
+      List<Node> nodes = nodeService.getNodeListWithinRange(0, 10);
+      modelAndView.addObject("nodes", nodes);
+      return modelAndView;
+    }
 }
