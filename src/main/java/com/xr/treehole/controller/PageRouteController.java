@@ -22,10 +22,6 @@ public class PageRouteController {
     @Autowired
     JwtUtils jwtUtils;
 
-    @GetMapping(path = "/")
-    public String routeRoot(){
-        return "redirect:/user/login";
-    }
 
     @GetMapping(path = "/index")
     public ModelAndView routeIndex() {
