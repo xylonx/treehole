@@ -21,6 +21,8 @@ import java.util.Map;
 @EnableConfigurationProperties(JwtConfig.class)
 public class JwtUtils {
 
+    public final String CookieName = "JwtToken";
+
     JwtConfig jwtConfig;
 
     Key secretKey;

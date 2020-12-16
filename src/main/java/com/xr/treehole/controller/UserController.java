@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,9 +40,9 @@ public class UserController {
     }
 
     // for hand up JWT token
-    @PostMapping(path = "/login")
-//    @ResponseBody
-    public String IssueJwtToken(User user, Model model, ServletRequest request) {
+    @PostMapping(path = "/login", consumes = "application/x-www-form-urlencoded")
+    //@ResponseBody
+    public String IssueJwtToken(User user, HttpServletResponse response) {
 
         boolean isPasswordRight = userService.isPasswordRight(user.getEmailAddress(), user.getPassword());
         if (!isPasswordRight){
@@ -51,7 +53,11 @@ public class UserController {
         claims.put("username", user.getEmailAddress());
         String token = jwtUtils.GenerateToken(claims);
 
-        model.addAttribute("token", token);
+        // model.addAttribute("token", token);
+
+        Cookie cookie = new Cookie(jwtUtils.CookieName, token);
+        cookie.setPath("/");
+        response.addCookie(cookie);
 
         return "redirect:/index";
     }

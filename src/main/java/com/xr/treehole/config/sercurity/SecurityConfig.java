@@ -25,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        http.authorizeRequests().anyRequest().permitAll();
 
         // ban the cross origin function
-        //http.cors().disable().csrf().disable();
+        http.cors().disable().csrf().disable();
 
         // Set session management to stateless
         http = http.sessionManagement()
