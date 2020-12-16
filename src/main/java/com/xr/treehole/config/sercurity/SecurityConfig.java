@@ -25,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        http.authorizeRequests().anyRequest().permitAll();
 
         // ban the cross origin function
-        http.cors().disable().csrf().disable();
+        //http.cors().disable().csrf().disable();
 
         // Set session management to stateless
         http = http.sessionManagement()
@@ -34,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // filter authorize requests
         http.authorizeRequests()
+                .antMatchers("/").permitAll()
                 .antMatchers("/user/login").permitAll()
                 .antMatchers("/user/register").permitAll()
                 // FIXME: test interface
