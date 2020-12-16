@@ -25,7 +25,7 @@ public class NodeService {
     NodeTreePathRepository nodeTreePathRepository;
 
     // means it is comment
-    public Node SaveNode(String parentId, Node node) {
+    public Node saveNode(String parentId, Node node) {
 
         String nodeId = GenerateId.GenerateIdWithTime(node.getNodeContent(), node.getPublisherHash());
         node.setNodeId(nodeId);
@@ -55,7 +55,7 @@ public class NodeService {
 
 
     // means it is an article
-    public Node SaveNode(Node node){
+    public Node saveNode(Node node){
 
         String nodeId = GenerateId.GenerateIdWithTime(node.getNodeContent(), node.getPublisherHash());
         node.setNodeId(nodeId);
@@ -72,7 +72,7 @@ public class NodeService {
         return node;
     }
 
-    public void DeleteNode(String nodeId) {
+    public void deleteNode(String nodeId) {
         nodeTreePathRepository.deleteNodeTreePathsByAncestorId(nodeId);
         nodeRepository.deleteById(nodeId);
     }
