@@ -1,150 +1,195 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-<head>
-
+  <head>
     <title>Index page</title>
 
     <!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
     <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="../static/css/materialize.min.css" media="screen,projection">
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection"/>
-    <link type="text/css" rel="stylesheet" href="../static/css/self.css">
-    <link type="text/css" rel="stylesheet" href="css/self.css">
-
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="../static/css/materialize.min.css"
+      media="screen,projection"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="css/materialize.min.css"
+      media="screen,projection"
+    />
+    <link type="text/css" rel="stylesheet" href="../static/css/self.css" />
+    <link type="text/css" rel="stylesheet" href="css/self.css" />
 
     <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta charset="utf-8">
-</head>
+    <meta charset="utf-8" />
+  </head>
 
-<body>
-
-<nav class="light-blue lighten-1" role="navigation">
-
-    <div class="nav-wrapper container">
+  <body>
+    <nav class="light-blue lighten-1" role="navigation">
+      <div class="nav-wrapper container">
         <a id="logo-container" class="brand-logo" href="#">树洞</a>
 
         <ul class="right hide-on-med-and-down">
+          <!-- FIXME: change the href into real link -->
 
-            <!-- FIXME: change the href into real link -->
-
-            <!-- FIXME: change href -->
-            <li><a href="./userHomepage.html"> 个人中心 </a></li>
-            <li><a href="#"> 热门贴</a></li>
+          <!-- FIXME: change href -->
+          <li>
+            <a
+              href="#post-modal"
+              class="waves-effect waves-light btn modal-trigger"
+            >
+              发帖
+            </a>
+          </li>
+          <li><a href="./userHomepage.html"> 个人中心 </a></li>
+          <li><a href="#"> 热门贴</a></li>
         </ul>
+
+        <!-- Modal Structure -->
+        <div id="post-modal" class="modal">
+            <form th:action="@{/p/node/new}" method="post">
+          <div class="modal-content">
+              <div class="input-field">
+                <input type="text" id="nodeTitle" />
+                <label for="nodeTitle">标题</label>
+              </div>
+              <div class="input-field">
+                <textarea
+                  placeholder="说点什么吧"
+                  id="nodeContent"
+                  class="materialize-textarea"
+                ></textarea>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <input style="margin: 1em" type="submit" class="modal-close btn-flat" value="发表">
+          </div>
+            </form>
+        </div>
 
         <ul id="nav-mobile" class="sidenav">
-            <li><a href="#"> 个人中心 </a></li>
-            <li><a href="#"> 热门贴 </a></li>
+          <li><a href="#"> 个人中心 </a></li>
+          <li><a href="#"> 热门贴 </a></li>
         </ul>
+      </div>
+    </nav>
 
-    </div>
-
-
-</nav>
-
-<!-- Search function -->
-<!-- TODO： change the input properties -->
-<div class="container">
-    <div class="row">
-        <div class="col s12 center-align">
-            查找:
-            <i class="material-icons">search</i>
-            <div class="input-field inline">
-                <input id="email_inline" type="email" class="validate">
-                <label for="email_inline">keywords</label>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="content">
-    <!-- FIXME: just some fake data -->
-    <div th:each="node : ${nodes}" class="container  z-depth-3">
-        <div class="col s12 m7">
-            <div class="card horizontal light-gray">
-                <div class="card-panel grey lighten-3 z-depth-1-half">
-                    <h5 th:text="${node.PublisherHash}"> Username </h5>
-                    <p th:text="${node.PublishTime}"></p>
-                </div>
-                <div class="card-stacked">
-                    <div class="card-content">
-                        <p th:text="${node.NodeContent}"></p>
-                    </div>
-                    <div class="card-action">
-                        <a th:href="@{/p/node(id=${node.NodeId})}">More</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container  z-depth-3">
-        <div class="col s12 m7">
-            <div class="card horizontal light-gray">
-                <div class="card-panel grey lighten-3 z-depth-1-half">
-                    <h5> Username </h5>
-                    <p> publish time </p>
-                </div>
-                <div class="card-stacked">
-                    <div class="card-content">
-                        <p>
-                            0 全破后重看一次开场画面莫名地令人消沉
-                            1 说来说去有名的游戏基本上都很好玩
-                            2 在一场战斗中等级连续提升的时候真的有够爽
-                            3 一个人去狩猎后发觉打一只怪的经验值高的让人吓一跳
-                            4 第一位夥伴是女孩子的话就能暂时以约会的心情去冒险
-                            5 得到强大的招式与装备之后就像骗人一样地顺畅闯关真开心
-                            6 攻略迷宫之后回到村里有时会遇到强大的头目
-                            7 希望制作人员清单跑完后会有结局后的故事......
-                        </p>
-                    </div>
-                    <div class="card-action">
-                        <a href="#">More</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-<footer class="page-footer black-blue">
+    <!-- Search function -->
+    <!-- TODO： change the input properties -->
     <div class="container">
+      <div class="row">
+        <div class="col s12 center-align">
+          查找:
+          <i class="material-icons">search</i>
+          <div class="input-field inline">
+            <input id="email_inline" type="email" class="validate" />
+            <label for="email_inline">keywords</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="content">
+      <!-- FIXME: just some fake data -->
+      <div th:each="node : ${nodes}" class="container z-depth-3">
+        <div class="col s12 m7">
+          <div class="card horizontal light-gray">
+            <div class="card-panel grey lighten-3 z-depth-1-half">
+              <h5 th:text="${node.PublisherHash}">Username</h5>
+              <p th:text="${node.PublishTime}"></p>
+            </div>
+            <div class="card-stacked">
+              <div class="card-content">
+                <p th:text="${node.NodeContent}"></p>
+              </div>
+              <div class="card-action">
+                <a th:href="@{/p/node(id=${node.NodeId})}">More</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container z-depth-3">
+        <div class="col s12 m7">
+          <div class="card horizontal light-gray">
+            <div class="card-panel grey lighten-3 z-depth-1-half">
+              <h5>Username</h5>
+              <p>publish time</p>
+            </div>
+            <div class="card-stacked">
+              <div class="card-content">
+                <p>
+                  0 全破后重看一次开场画面莫名地令人消沉 1
+                  说来说去有名的游戏基本上都很好玩 2
+                  在一场战斗中等级连续提升的时候真的有够爽 3
+                  一个人去狩猎后发觉打一只怪的经验值高的让人吓一跳 4
+                  第一位夥伴是女孩子的话就能暂时以约会的心情去冒险 5
+                  得到强大的招式与装备之后就像骗人一样地顺畅闯关真开心 6
+                  攻略迷宫之后回到村里有时会遇到强大的头目 7
+                  希望制作人员清单跑完后会有结局后的故事......
+                </p>
+              </div>
+              <div class="card-action">
+                <a href="#">More</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="page-footer black-blue">
+      <div class="container">
         <div class="row">
-            <div class="col l6 s12">
-                <h5 class="white-text">相关页面</h5>
-                <ul>
-                    <li><a class="white-text" href="#"> 个人中心 </a></li>
-                    <li><a class="white-text" href="#"> 热门贴 </a></li>
-                </ul>
-            </div>
+          <div class="col l6 s12">
+            <h5 class="white-text">相关页面</h5>
+            <ul>
+              <li><a class="white-text" href="#"> 个人中心 </a></li>
+              <li><a class="white-text" href="#"> 热门贴 </a></li>
+            </ul>
+          </div>
 
-            <!-- FIXME: change it to needed info -->
-            <div class="col l6 s12">
-                <h5 class="white-text">相关页面</h5>
-                <ul>
-                    <li><a class="white-text" href="#"> 个人中心 </a></li>
-                    <li><a class="white-text" href="#"> 热门贴 </a></li>
-                </ul>
-            </div>
+          <!-- FIXME: change it to needed info -->
+          <div class="col l6 s12">
+            <h5 class="white-text">相关页面</h5>
+            <ul>
+              <li><a class="white-text" href="#"> 个人中心 </a></li>
+              <li><a class="white-text" href="#"> 热门贴 </a></li>
+            </ul>
+          </div>
         </div>
-    </div>
+      </div>
 
-
-    <div class="footer-copyright center-align">
+      <div class="footer-copyright center-align">
         <div class="container">
-            Powered by <a class="white-text text-lighten-3" href="http://materializecss.com">Materialize</a>
-            | Made by
-            <a class="white-text text-lighten-3" href="http://xylonx.com">Xylonx</a>
-            and <a class="white-text text-lighten-3" href="https://rapiz.me">Rapiz</a>
+          Powered by
+          <a class="white-text text-lighten-3" href="http://materializecss.com"
+            >Materialize</a
+          >
+          | Made by
+          <a class="white-text text-lighten-3" href="http://xylonx.com"
+            >Xylonx</a
+          >
+          and
+          <a class="white-text text-lighten-3" href="https://rapiz.me">Rapiz</a>
         </div>
-    </div>
+      </div>
+    </footer>
 
-</footer>
-
-<!--JavaScript at end of body for optimized loading-->
-<script type="text/javascript" src="js/materialize.min.js"></script>
-</body>
+    <!--JavaScript at end of body for optimized loading-->
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script
+      type="text/javascript"
+      src="../static/js/materialize.min.js"
+    ></script>
+    <script type="text/javascript">
+      M.AutoInit();
+    </script>
+  </body>
 </html>
