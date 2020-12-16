@@ -53,9 +53,7 @@ public class UserController {
 
         model.addAttribute("token", token);
 
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-
-
+        return "redirect:/index";
     }
 
 
