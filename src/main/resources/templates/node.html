@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title - Treehole</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+
+<span>Welcome to node</span><span th:text="${node.NodeId}"> NodeId: th:NodeId</span>
+<h1 th:text="${node.NodeContent}">nodeContent</h1>
+<span th:text="${node.NodeContent}">nodeContent</span>
+<span th:text="${node.PublisherHash}">nodePublisher</span>
+<span th:text="${node.PublishTime}">date</span>
+
+<span>say something!</span>
+<form th:action="@{/p/node/reply(id=${nodeId})}">
+    <textarea name="replyContent" id="replyContent" cols="30" rows="10"></textarea>
+</form>
+<button>reply</button>
+
+</body>
+</html>
