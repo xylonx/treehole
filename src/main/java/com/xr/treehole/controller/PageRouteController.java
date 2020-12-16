@@ -34,6 +34,10 @@ public class PageRouteController {
         return modelAndView;
     }
 
+    @GetMapping(path = "/")
+    public String routeDefault() {
+        return "redirect:/index";
+    }
 
     @GetMapping(path = "/test")
     public String routeTest() {
