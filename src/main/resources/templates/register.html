@@ -3,7 +3,9 @@
 <head>
     <title>register page</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="../static/css/layout.css">
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/self.css">
+
 </head>
 <body>
 
@@ -18,7 +20,7 @@
 
 <div class="log">
     <form th:action="@{/user/register}" method="post">
-                <div class="inputDiv">
+        <div class="inputDiv">
             <label> 邮箱地址 <br/> <input type="text" name="EmailAddress"/> </label>
         </div>
 

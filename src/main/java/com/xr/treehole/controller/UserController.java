@@ -4,20 +4,15 @@ import com.xr.treehole.config.selfdef.MailConfig;
 import com.xr.treehole.entity.User;
 import com.xr.treehole.middleware.jwt.JwtUtils;
 import com.xr.treehole.service.UserService;
-import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.view.RedirectView;
 
-import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,22 +37,14 @@ public class UserController {
     // for hand up JWT token
     @PostMapping(path = "/login", consumes = "application/x-www-form-urlencoded")
     //@ResponseBody
-    public String IssueJwtToken(User user, HttpServletResponse response) {
+    public String IssueJwtTokenInCookie(User user, HttpServletResponse response) {
 
         boolean isPasswordRight = userService.isPasswordRight(user.getEmailAddress(), user.getPassword());
         if (!isPasswordRight){
             return "redirect:/user/login";
         }
 
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("username", user.getEmailAddress());
-        String token = jwtUtils.GenerateToken(claims);
-
-        // model.addAttribute("token", token);
-
-        Cookie cookie = new Cookie(jwtUtils.CookieName, token);
-        cookie.setPath("/");
-        response.addCookie(cookie);
+        IssueJwtTokenInCookie(response, user.getEmailAddress());
 
         return "redirect:/index";
     }
@@ -89,6 +76,16 @@ public class UserController {
         Map<String, String> returnToken = new HashMap<>();
         returnToken.put("token", token);
         return returnToken;
+    }
+
+    private void IssueJwtTokenInCookie(HttpServletResponse response, String emailAddress){
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("username", emailAddress);
+        String token = jwtUtils.GenerateToken(claims);
+
+        Cookie cookie = new Cookie(jwtUtils.CookieName, token);
+        cookie.setPath("/");
+        response.addCookie(cookie);
     }
 
 }
