@@ -40,6 +40,7 @@ mvnw
 ### project design ###
 策划.md
 
+<<<<<<< HEAD
 ### useless but not grabage Class ###
 ### in common, they are product of study the new technology ###
 /src/main/java/uselessButNotGarbage/
@@ -47,3 +48,6 @@ mvnw
 ### config ###
 src/main/resources/application.properties
 src/main/resources/config.properties
+=======
+src/main/resources/application.properties
+>>>>>>> d991e2f8e941c20802807d3a0f713d6196e7b092
