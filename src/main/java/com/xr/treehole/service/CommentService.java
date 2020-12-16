@@ -6,9 +6,11 @@ import com.xr.treehole.repositories.NodeRepository;
 import com.xr.treehole.repositories.NodeTreePathRepository;
 import com.xr.treehole.util.GenerateId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -52,7 +54,24 @@ public class CommentService {
         nodeTreePathRepository.deleteNodeTreePathsByAncestorId(commentId);
     }
 
-    public void GetCommentTree(String commentId) {
+    public List<Node> GetComments(String commentId) {
 
+        List<NodeTreePath> treePaths = nodeTreePathRepository.findAllByAncestorId(commentId);
+        ArrayList<String> nodeIds = new ArrayList<>();
+
+        for (NodeTreePath nodeTreePath : treePaths){
+            nodeIds.add(nodeTreePath.getDescendantId());
+        }
+
+        List<Node> comments = nodeRepository.findAllById(nodeIds);
+
+        comments.sort(new Comparator<Node>() {
+            @Override
+            public int compare(Node o1, Node o2) {
+                return Integer.compare(o1.getNodeDepth(), o2.getNodeDepth());
+            }
+        });
+
+        return comments;
     }
 }
