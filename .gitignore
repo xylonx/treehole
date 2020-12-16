@@ -39,3 +39,5 @@ mvnw
 
 ### project design ###
 策划.md
+
+src/main/resources/application.properties
