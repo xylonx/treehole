@@ -31,10 +31,11 @@ public class NodeController {
   }
 
     @GetMapping(path = "/index")
-    public ModelAndView routeIndex() {
+    public ModelAndView routeIndex(@RequestParam(name="page", required=false, defaultValue="0") int page) {
       ModelAndView modelAndView = new ModelAndView();
       modelAndView.setViewName("index");
-      List<Node> nodes = nodeService.getNodeListWithinRange(0, 10);
+      final int PAGE_LEN = 10;
+      List<Node> nodes = nodeService.getNodeListWithinRange(page*PAGE_LEN, (PAGE_LEN+1)*10);
       modelAndView.addObject("nodes", nodes);
       return modelAndView;
     }

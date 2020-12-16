@@ -29,6 +29,8 @@ public class NodeService {
     }
 
     public List<Node> getNodeListWithinRange(int start, int end) {
-        return nodeRepository.findAll().subList(start, end);
+        List<Node> nodes = nodeRepository.findAll();
+        if (start >= nodes.size()) return null;
+        return nodes.subList(start, Math.min(nodes.size(), end));
     }
 }
