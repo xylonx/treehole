@@ -30,7 +30,11 @@ public class NodeService {
         String nodeId = GenerateId.GenerateIdWithTime(node.getNodeContent(), node.getPublisherHash());
         node.setNodeId(nodeId);
 
-        Node parent = nodeRepository.getOne(parentId);
+        Optional<Node> optionalNode = nodeRepository.findById(parentId);
+        if (optionalNode.isEmpty()) {
+            return null;
+        }
+        Node parent = optionalNode.get();
         node.setNodeDepth(parent.getNodeDepth() + 1);
 
         nodeRepository.save(node);
@@ -55,7 +59,7 @@ public class NodeService {
 
 
     // means it is an article
-    public Node saveNode(Node node){
+    public Node saveNode(Node node) {
 
         String nodeId = GenerateId.GenerateIdWithTime(node.getNodeContent(), node.getPublisherHash());
         node.setNodeId(nodeId);
@@ -82,7 +86,7 @@ public class NodeService {
         List<NodeTreePath> treePaths = nodeTreePathRepository.findAllByAncestorId(nodeId);
         ArrayList<String> nodeIds = new ArrayList<>();
 
-        for (NodeTreePath nodeTreePath : treePaths){
+        for (NodeTreePath nodeTreePath : treePaths) {
             nodeIds.add(nodeTreePath.getDescendantId());
         }
 
