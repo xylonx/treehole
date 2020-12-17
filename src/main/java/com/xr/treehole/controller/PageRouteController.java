@@ -2,16 +2,14 @@ package com.xr.treehole.controller;
 
 import com.xr.treehole.config.selfdef.MailConfig;
 import com.xr.treehole.middleware.jwt.JwtUtils;
+import com.xr.treehole.repositories.RegisterCodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.HashMap;
+import org.springframework.web.servlet.ModelAndView;
+
+
 
 @Controller
 public class PageRouteController {
@@ -22,6 +20,9 @@ public class PageRouteController {
     @Autowired
     JwtUtils jwtUtils;
 
+    @Autowired
+    RegisterCodeRepository registerCodeRepository;
+
     @GetMapping(path = "/")
     public String routeDefault() {
         return "redirect:/index";
@@ -29,7 +30,7 @@ public class PageRouteController {
 
     @GetMapping(path = "/test")
     public String routeTest() {
-        return "redirect:/index";
+        return "";
     }
 
 

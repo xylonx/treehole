@@ -1,11 +1,10 @@
 package com.xr.treehole.controller;
 
-import com.xr.treehole.config.selfdef.MailConfig;
+
 import com.xr.treehole.entity.User;
 import com.xr.treehole.middleware.jwt.JwtUtils;
 import com.xr.treehole.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +19,6 @@ import java.util.Map;
 
 @Controller
 @RequestMapping(path = "/user")
-@EnableConfigurationProperties(MailConfig.class)
 public class UserController {
 
     @Autowired
@@ -44,7 +42,7 @@ public class UserController {
             return "redirect:/user/login";
         }
 
-        IssueJwtTokenInCookie(response, user.getEmailAddress());
+        jwtUtils.IssueJwtTokenInCookie(response, user.getEmailAddress());
 
         return "redirect:/index";
     }
@@ -54,8 +52,6 @@ public class UserController {
     public String routeRegisterPage(){
         return "register";
     }
-
-
 
 
     @PostMapping(path = "/register", consumes = "application/x-www-form-urlencoded")
@@ -78,14 +74,10 @@ public class UserController {
         return returnToken;
     }
 
-    private void IssueJwtTokenInCookie(HttpServletResponse response, String emailAddress){
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("username", emailAddress);
-        String token = jwtUtils.GenerateToken(claims);
+    @PostMapping(path = "/code")
+    public void SendRegisterCode(String emailAddress){
 
-        Cookie cookie = new Cookie(jwtUtils.CookieName, token);
-        cookie.setPath("/");
-        response.addCookie(cookie);
     }
+
 
 }

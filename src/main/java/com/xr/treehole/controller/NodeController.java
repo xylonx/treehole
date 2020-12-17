@@ -3,7 +3,10 @@ package com.xr.treehole.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.xr.treehole.service.NodeService;
+import com.xr.treehole.service.UserService;
 import com.xr.treehole.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,33 +21,39 @@ public class NodeController {
   @Autowired
   NodeService nodeService;
 
+  @Autowired
+  UserService userService;
+
   @GetMapping(path = "/p/node")
-  public ModelAndView routeNode(@RequestParam(name="id", required=true)String nodeId) {
-      Optional<Node> node = nodeService.getNodeById(nodeId);
-      ModelAndView modelAndView = new ModelAndView();
-      if (node.isEmpty()) {
-        modelAndView.setViewName("error");
-        return modelAndView;
-      }
-      modelAndView.setViewName("node");
-      modelAndView.addObject("node", node.get());
+  public ModelAndView routeNode(@RequestParam(name = "id", required = true) String nodeId) {
+    Optional<Node> node = nodeService.getNodeById(nodeId);
+    ModelAndView modelAndView = new ModelAndView();
+    if (node.isEmpty()) {
+      modelAndView.setViewName("error");
       return modelAndView;
+    }
+    modelAndView.setViewName("node");
+    modelAndView.addObject("node", node.get());
+    return modelAndView;
   }
 
-    @GetMapping(path = "/index")
-    public ModelAndView routeIndex(@RequestParam(name="page", required=false, defaultValue="0") int page) {
-      ModelAndView modelAndView = new ModelAndView();
-      modelAndView.setViewName("index");
-      final int PAGE_LEN = 10;
-      List<Node> nodes = nodeService.getNodeListWithinRange(page*PAGE_LEN, (PAGE_LEN+1)*10);
-      modelAndView.addObject("nodes", nodes);
-      return modelAndView;
-    }
+  @GetMapping(path = "/index")
+  public ModelAndView routeIndex(@RequestParam(name = "page", required = false, defaultValue = "0") int page) {
+    ModelAndView modelAndView = new ModelAndView();
+    modelAndView.setViewName("index");
+    final int PAGE_LEN = 10;
+    List<Node> nodes = nodeService.getNodeListWithinRange(page * PAGE_LEN, (PAGE_LEN + 1) * 10);
+    modelAndView.addObject("nodes", nodes);
+    return modelAndView;
+  }
 
-    @PostMapping(path = "/p/node/new", consumes = "application/x-www-form-urlencoded")
-    public String postNode(Node node) {
-      System.out.println(node);
-      node = nodeService.saveNode(node);
-      return "redirect:/p/node?id=" + node.getNodeId(); 
-    }
+  @PostMapping(path = "/p/node/new", consumes = "application/x-www-form-urlencoded")
+  public String postNode(Node node, HttpServletRequest request) {
+    System.out.println(request);
+    User user = userService.getCurrentUser(request);
+    System.out.println(user);
+    node.setPublisherHash(user.getEmailHash());
+    node = nodeService.saveNode(node);
+    return "redirect:/p/node?id=" + node.getNodeId();
+  }
 }

@@ -1,7 +1,6 @@
 package com.xr.treehole.service;
 
 import com.xr.treehole.entity.User;
-import com.xr.treehole.service.UserService;
 import com.xr.treehole.model.SecureUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +16,7 @@ public class SecurityUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = userService.getUserByEmail(s);
+        User user = userService.getUserByEmailHash(s);
         return new SecureUser(user);
     }
 }
