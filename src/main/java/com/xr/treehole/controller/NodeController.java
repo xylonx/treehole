@@ -1,5 +1,6 @@
 package com.xr.treehole.controller;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -61,6 +62,22 @@ public class NodeController {
     node.setPublisherHash(user.getEmailHash());
     node = nodeService.saveNode(null, node);
     return "redirect:/p/node?id=" + node.getNodeId();
+  }
+
+  @GetMapping(path = "/p/node/reply")
+  public ModelAndView routeReply(@RequestParam(name = "id", required = true) String nodeId) {
+    Optional<Node> node = nodeService.getNodeById(nodeId);
+    ModelAndView modelAndView = new ModelAndView();
+    if (node.isEmpty()) {
+      modelAndView.setViewName("error");
+      return modelAndView;
+    }
+    modelAndView.setViewName("node");
+    modelAndView.addObject("node", node.get());
+    List<Node> comments = new ArrayList<>();
+    comments.add(node.get());
+    modelAndView.addObject("comments", comments);
+    return modelAndView;
   }
 
   @PostMapping(path = "/p/node/reply", consumes = "application/x-www-form-urlencoded")
