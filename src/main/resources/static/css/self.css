@@ -18,8 +18,9 @@
     box-sizing: border-box;
 }
 
-#content {
+.content {
     height: 100%;
+    margin-top: 1em;
 }
 
 .nodeId {
