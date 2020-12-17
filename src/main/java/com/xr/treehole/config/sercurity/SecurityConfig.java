@@ -37,6 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/user/login").permitAll()
                 .antMatchers("/user/register").permitAll()
+                .antMatchers("/user/register-code").permitAll()
                 // FIXME: test interface
                 .antMatchers("/test").permitAll()
                 .anyRequest().authenticated();

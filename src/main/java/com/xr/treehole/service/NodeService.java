@@ -107,4 +107,8 @@ public class NodeService {
         if (start >= nodes.size()) return null;
         return nodes.subList(start, Math.min(nodes.size(), end));
     }
+
+    public List<Node> getArticleNodeList(String emailHashed){
+        return nodeRepository.getAllByNodeDepthAndPublisherHash(0, emailHashed);
+    }
 }

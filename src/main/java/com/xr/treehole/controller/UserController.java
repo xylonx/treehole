@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +29,7 @@ public class UserController {
     JwtUtils jwtUtils;
 
     @GetMapping(path = "/login")
-    public String routeLoginPage(){
+    public String routeLoginPage() {
         return "login";
     }
 
@@ -38,7 +39,7 @@ public class UserController {
     public String IssueJwtTokenInCookie(User user, HttpServletResponse response) {
 
         boolean isPasswordRight = userService.isPasswordRight(user.getEmailAddress(), user.getPassword());
-        if (!isPasswordRight){
+        if (!isPasswordRight) {
             return "redirect:/user/login";
         }
 
@@ -49,34 +50,36 @@ public class UserController {
 
 
     @GetMapping(path = "/register")
-    public String routeRegisterPage(){
+    public String routeRegisterPage() {
         return "register";
     }
 
-
     @PostMapping(path = "/register", consumes = "application/x-www-form-urlencoded")
-    @ResponseBody
-    public Map<String, String> register(User user) {
+    public String register(User user, String registerCode, HttpServletResponse response) {
 
         boolean isUserExist = userService.isUserExist(user.getEmailAddress());
-        if (isUserExist){
-            return null;
+        boolean isRegisterCodeValid = userService.isRegisterCodeValid(registerCode);
+        if (isUserExist) {
+            return "redirect:/user/login";
+        }
+        if (!isRegisterCodeValid){
+            return "redirect:/user/register";
         }
 
         user = userService.saveUser(user);
-
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("username", user.getEmailAddress());
-        String token = jwtUtils.GenerateToken(claims);
-
-        Map<String, String> returnToken = new HashMap<>();
-        returnToken.put("token", token);
-        return returnToken;
+        jwtUtils.IssueJwtTokenInCookie(response, user.getEmailAddress());
+        return "redirect:/index";
     }
 
-    @PostMapping(path = "/code")
-    public void SendRegisterCode(String emailAddress){
+    @PostMapping(path = "/register-code")
+    @ResponseBody
+    public void SendRegisterCode(String emailAddress) {
 
+        if (!userService.isPostfixValid(emailAddress)) {
+            return;
+        }
+
+        userService.SendRegisterCode(emailAddress);
     }
 
 
