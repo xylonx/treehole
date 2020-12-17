@@ -102,8 +102,8 @@ public class NodeService {
         return nodeRepository.findById(id);
     }
 
-    public List<Node> getNodeListWithinRange(int start, int end) {
-        List<Node> nodes = nodeRepository.findAll();
+    public List<Node> getPostsWithinRange(int start, int end) {
+        List<Node> nodes = nodeRepository.findByNodeDepthOrderByPublishTimeDesc(0);
         if (start >= nodes.size()) return null;
         return nodes.subList(start, Math.min(nodes.size(), end));
     }

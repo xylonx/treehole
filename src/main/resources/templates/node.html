@@ -1,23 +1,52 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title - Treehole</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<head th:replace="fragments :: head">
 </head>
+
 <body>
-
-<span>Welcome to node</span><span th:text="${node.NodeId}"> NodeId: th:NodeId</span>
-<h1 th:text="${node.NodeContent}">nodeContent</h1>
-<span th:text="${node.NodeContent}">nodeContent</span>
-<span th:text="${node.PublisherHash}">nodePublisher</span>
-<span th:text="${node.PublishTime}">date</span>
-
-<span>say something!</span>
-<form th:action="@{/p/node/reply(id=${nodeId})}">
-    <textarea name="replyContent" id="replyContent" cols="30" rows="10"></textarea>
-</form>
-<button>reply</button>
-
+    <nav th:replace="fragments :: nav"></nav>
+    <div class="content container col s12 m7">
+        <!--
+        <div class="postContent card">
+            <span>Welcome to node</span><span th:text="${node.NodeId}"> NodeId: th:NodeId</span>
+            <h1 th:text="${node.NodeContent}">nodeContent</h1>
+            <span th:text="${node.NodeContent}">nodeContent</span>
+            <span th:text="${node.PublisherHash}">nodePublisher</span>
+            <span th:text="${node.PublishTime}">date</span>
+        </div>
+    -->
+        <div class="commentsContainer">
+            <div th:each="node : ${comments}" class="comment card">
+                <div class="card-stacked">
+                    <div class="card-content">
+                        <p th:text="${node.NodeContent}"></p>
+                    </div>
+                    <div class="card-action">
+                        <a th:href="@{/p/node/reply(id=${node.NodeId})}">Reply</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="replyform">
+            <form th:action="@{/p/node/reply(id=${node.nodeId})}" method="post">
+                <div class="modal-content">
+                    <div class="input-field">
+                        <input type="text" id="nodeTitle" name="nodeTitle" />
+                        <label for="nodeTitle">回复标题</label>
+                    </div>
+                    <div class="input-field">
+                        <textarea placeholder="说点什么吧" id="nodeContent" name="nodeContent"
+                            class="materialize-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input style="margin: 1em" type="submit" class="modal-close btn-flat" value="发表">
+                </div>
+            </form>
+        </div>
+    </div>
+    <footer th:replace="fragments :: footer"></footer>
 </body>
+
 </html>
