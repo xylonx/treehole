@@ -56,13 +56,14 @@
             <form th:action="@{/p/node/new}" method="post">
           <div class="modal-content">
               <div class="input-field">
-                <input type="text" id="nodeTitle" />
+                <input type="text" id="nodeTitle" name="nodeTitle"/>
                 <label for="nodeTitle">标题</label>
               </div>
               <div class="input-field">
                 <textarea
                   placeholder="说点什么吧"
                   id="nodeContent"
+                  name="nodeContent"
                   class="materialize-textarea"
                 ></textarea>
               </div>
