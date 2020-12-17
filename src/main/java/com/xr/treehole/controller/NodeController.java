@@ -57,11 +57,9 @@ public class NodeController {
 
   @PostMapping(path = "/p/node/new", consumes = "application/x-www-form-urlencoded")
   public String postNode(Node node, HttpServletRequest request) {
-    System.out.println(request);
     User user = userService.getCurrentUser(request);
-    System.out.println(user);
     node.setPublisherHash(user.getEmailHash());
-    node = nodeService.saveNode(node);
+    node = nodeService.saveNode(null, node);
     return "redirect:/p/node?id=" + node.getNodeId();
   }
 
