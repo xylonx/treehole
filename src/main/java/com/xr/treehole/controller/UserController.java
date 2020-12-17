@@ -1,11 +1,10 @@
 package com.xr.treehole.controller;
 
-import com.xr.treehole.config.selfdef.MailConfig;
+
 import com.xr.treehole.entity.User;
 import com.xr.treehole.middleware.jwt.JwtUtils;
 import com.xr.treehole.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +19,6 @@ import java.util.Map;
 
 @Controller
 @RequestMapping(path = "/user")
-@EnableConfigurationProperties(MailConfig.class)
 public class UserController {
 
     @Autowired
@@ -56,8 +54,6 @@ public class UserController {
     }
 
 
-
-
     @PostMapping(path = "/register", consumes = "application/x-www-form-urlencoded")
     @ResponseBody
     public Map<String, String> register(User user) {
@@ -76,6 +72,11 @@ public class UserController {
         Map<String, String> returnToken = new HashMap<>();
         returnToken.put("token", token);
         return returnToken;
+    }
+
+    @PostMapping(path = "/code")
+    public void SendRegisterCode(String emailAddress){
+
     }
 
     private void IssueJwtTokenInCookie(HttpServletResponse response, String emailAddress){

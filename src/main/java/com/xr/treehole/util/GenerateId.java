@@ -1,6 +1,7 @@
 package com.xr.treehole.util;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import java.time.Instant;
 
@@ -25,4 +26,7 @@ public class GenerateId {
         return DigestUtils.md5Hex(stringBuilder.toString());
     }
 
+    public static String GenerateRandomId(int length, boolean useLetters, boolean useNumbers) {
+        return RandomStringUtils.random(length, useLetters, useNumbers);
+    }
 }
