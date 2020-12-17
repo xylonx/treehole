@@ -27,6 +27,10 @@ public class NodeService {
 
     // means it is comment
     public Node saveNode(String parentId, Node node) {
+        String nodeTitle = node.getNodeTitle();
+        if (nodeTitle == null || nodeTitle.isEmpty()) {
+            node.setNodeTitle("未命题");
+        }
 
         String nodeId = GenerateId.GenerateIdWithTime(node.getNodeContent(), node.getPublisherHash());
         node.setNodeId(nodeId);
