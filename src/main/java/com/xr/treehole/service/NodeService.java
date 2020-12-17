@@ -30,35 +30,44 @@ public class NodeService {
         String nodeId = GenerateId.GenerateIdWithTime(node.getNodeContent(), node.getPublisherHash());
         node.setNodeId(nodeId);
 
-        Optional<Node> optionalNode = nodeRepository.findById(parentId);
-        if (optionalNode.isEmpty()) {
-            return null;
-        }
-        Node parent = optionalNode.get();
-        node.setNodeDepth(parent.getNodeDepth() + 1);
-
-        nodeRepository.save(node);
-
-
-        // build up and save the new associations
-        List<NodeTreePath> paths = nodeTreePathRepository.findAllByDescendantId(parentId);
+        int nodeDepth = 0;
 
         List<NodeTreePath> savedNodeTP = new ArrayList<>();
-        for (NodeTreePath path : paths) {
 
-            String ntpId = GenerateId.GenerateIdByItems(path.getAncestorId(), nodeId);
+        // self circle
+        String selfCircleId = GenerateId.GenerateIdByItems(nodeId, nodeId);
+        NodeTreePath selfCircle = new NodeTreePath(selfCircleId, nodeId, nodeId);
+        savedNodeTP.add(selfCircle);
 
-            NodeTreePath nodeTreePath = new NodeTreePath(ntpId, path.getAncestorId(), nodeId);
-            savedNodeTP.add(nodeTreePath);
+        if (parentId != null) {
+            Optional<Node> optionalNode = nodeRepository.findById(parentId);
+            if (optionalNode.isEmpty()) {
+                return null;
+            }
+            Node parent = optionalNode.get();
+            nodeDepth = parent.getNodeDepth() + 1;
+
+            List<NodeTreePath> paths = nodeTreePathRepository.findAllByDescendantId(parentId);
+            for (NodeTreePath path : paths) {
+
+                String ntpId = GenerateId.GenerateIdByItems(path.getAncestorId(), nodeId);
+
+                NodeTreePath nodeTreePath = new NodeTreePath(ntpId, path.getAncestorId(), nodeId);
+                savedNodeTP.add(nodeTreePath);
+            }
         }
+
+        node.setNodeDepth(nodeDepth);
+
+        nodeRepository.save(node);
 
         nodeTreePathRepository.saveAll(savedNodeTP);
 
         return node;
     }
 
-
     // means it is an article
+    @Deprecated
     public Node saveNode(Node node) {
 
         String nodeId = GenerateId.GenerateIdWithTime(node.getNodeContent(), node.getPublisherHash());
@@ -112,7 +121,7 @@ public class NodeService {
         return nodes.subList(start, Math.min(nodes.size(), end));
     }
 
-    public List<Node> getArticleNodeList(String emailHashed){
+    public List<Node> getArticleNodeList(String emailHashed) {
         return nodeRepository.getAllByNodeDepthAndPublisherHash(0, emailHashed);
     }
 }
