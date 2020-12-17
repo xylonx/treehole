@@ -32,11 +32,6 @@ public class NodeController {
     modelAndView.setViewName("index");
     final int PAGE_LEN = 10;
     List<Node> nodes = nodeService.getPostsWithinRange(page * PAGE_LEN, (PAGE_LEN + 1) * 10);
-    for (Node node : nodes) {
-      String s = node.getNodeContent();
-      s.substring(0, Math.min(s.length(), 200));
-      node.setNodeContent(s);
-    }
     modelAndView.addObject("nodes", nodes);
     return modelAndView;
   }
