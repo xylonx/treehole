@@ -24,6 +24,21 @@ public class NodeController {
   @Autowired
   UserService userService;
 
+  @GetMapping(path = "/index")
+  public ModelAndView routeIndex(@RequestParam(name = "page", required = false, defaultValue = "0") int page) {
+    ModelAndView modelAndView = new ModelAndView();
+    modelAndView.setViewName("index");
+    final int PAGE_LEN = 10;
+    List<Node> nodes = nodeService.getPostsWithinRange(page * PAGE_LEN, (PAGE_LEN + 1) * 10);
+    for (Node node : nodes) {
+      String s = node.getNodeContent();
+      s.substring(0, Math.min(s.length(), 200));
+      node.setNodeContent(s);
+    }
+    modelAndView.addObject("nodes", nodes);
+    return modelAndView;
+  }
+
   @GetMapping(path = "/p/node")
   public ModelAndView routeNode(@RequestParam(name = "id", required = true) String nodeId) {
     Optional<Node> node = nodeService.getNodeById(nodeId);
@@ -34,16 +49,8 @@ public class NodeController {
     }
     modelAndView.setViewName("node");
     modelAndView.addObject("node", node.get());
-    return modelAndView;
-  }
-
-  @GetMapping(path = "/index")
-  public ModelAndView routeIndex(@RequestParam(name = "page", required = false, defaultValue = "0") int page) {
-    ModelAndView modelAndView = new ModelAndView();
-    modelAndView.setViewName("index");
-    final int PAGE_LEN = 10;
-    List<Node> nodes = nodeService.getNodeListWithinRange(page * PAGE_LEN, (PAGE_LEN + 1) * 10);
-    modelAndView.addObject("nodes", nodes);
+    List<Node> comments = nodeService.GetAllSubNodes(nodeId);
+    modelAndView.addObject("comments", comments);
     return modelAndView;
   }
 
@@ -54,6 +61,16 @@ public class NodeController {
     System.out.println(user);
     node.setPublisherHash(user.getEmailHash());
     node = nodeService.saveNode(node);
+    return "redirect:/p/node?id=" + node.getNodeId();
+  }
+
+  @PostMapping(path = "/p/node/reply", consumes = "application/x-www-form-urlencoded")
+  public String replyNode(Node node, @RequestParam(name="id", required=true) String parentId, HttpServletRequest request) {
+    System.out.println(request);
+    User user = userService.getCurrentUser(request);
+    System.out.println(user);
+    node.setPublisherHash(user.getEmailHash());
+    node = nodeService.saveNode(parentId, node);
     return "redirect:/p/node?id=" + node.getNodeId();
   }
 }
