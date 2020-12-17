@@ -10,6 +10,7 @@ import com.xr.treehole.util.GenerateId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -31,6 +32,8 @@ public class NodeService {
         node.setNodeId(nodeId);
 
         int nodeDepth = 0;
+        long now = Instant.now().getEpochSecond();
+        node.setPublishTime(now);
 
         List<NodeTreePath> savedNodeTP = new ArrayList<>();
 
@@ -72,6 +75,9 @@ public class NodeService {
 
         String nodeId = GenerateId.GenerateIdWithTime(node.getNodeContent(), node.getPublisherHash());
         node.setNodeId(nodeId);
+
+        long now = Instant.now().getEpochSecond();
+        node.setPublishTime(now);
 
         // the depth of article is 0
         node.setNodeDepth(0);
