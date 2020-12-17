@@ -80,6 +80,18 @@ public class NodeController {
     return modelAndView;
   }
 
+  @PostMapping(path = "/p/node/thumbUp")
+  public String thumbUp(@RequestParam(name = "id", required = true) String nodeId, HttpServletRequest request) {
+    Optional<Node> node = nodeService.getNodeById(nodeId);
+    if (node.isEmpty()) {
+      return "error";
+    }
+    if (nodeService.thumbUpNode(userService.getCurrentUser(request), node.get())) {
+      return "success";
+    }
+    return "failure";
+  }
+
   @PostMapping(path = "/p/node/reply", consumes = "application/x-www-form-urlencoded")
   public String replyNode(Node node, @RequestParam(name="id", required=true) String parentId, HttpServletRequest request) {
     System.out.println(request);

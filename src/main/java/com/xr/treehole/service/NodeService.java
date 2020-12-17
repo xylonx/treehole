@@ -1,10 +1,12 @@
 package com.xr.treehole.service;
 
 import com.xr.treehole.entity.NodeTreePath;
+import com.xr.treehole.entity.ThumbUp;
 import com.xr.treehole.entity.User;
 import com.xr.treehole.entity.Node;
 import com.xr.treehole.repositories.NodeRepository;
 import com.xr.treehole.repositories.NodeTreePathRepository;
+import com.xr.treehole.repositories.ThumbUpRepository;
 import com.xr.treehole.util.Encrypt;
 import com.xr.treehole.util.GenerateId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,30 @@ public class NodeService {
 
     @Autowired
     NodeTreePathRepository nodeTreePathRepository;
+
+    @Autowired
+    ThumbUpRepository thumbUpRepository;
+
+    public boolean hasThumbedUpNode(User user, Node node) {
+       Optional<ThumbUp> tb = thumbUpRepository.findOneByEmailHashAndNodeId(user.getEmialHash(), node.getNodeId());
+       return tb.isPresent();
+    }
+
+    public boolean thumbUpNode(User user, Node node) {
+       if (hasThumbedUpNode(user, node)) return false;
+       Optional<Node> optionalNodeInDb = nodeRepository.findById(node.getNodeId());
+       if (optionalNodeInDb.isEmpty()) return false;
+       // else the node is real
+
+       Node nodeInDb = optionalNodeInDb.get();
+       nodeInDb.setThumbUpNumber(nodeInDb.getThumbUpNumber() + 1);
+       nodeRepository.save(nodeInDb);
+
+       ThumbUp tb = new ThumbUp(user.getEmialHash(), node.getNodeId());
+       thumbUpRepository.save(tb);
+
+       return true; 
+    }
 
     // means it is comment
     public Node saveNode(String parentId, Node node) {
