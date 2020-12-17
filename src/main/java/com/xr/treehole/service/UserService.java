@@ -106,7 +106,7 @@ public class UserService {
 
     }
 
-    public boolean isPostfixMeet(String emailAddress) {
+    public boolean isPostfixValid(String emailAddress) {
         String postfix = mailConfig.getPostfix();
         String pattern = ".*" + postfix + "$";
 
