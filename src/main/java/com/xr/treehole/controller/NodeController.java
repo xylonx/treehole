@@ -3,7 +3,10 @@ package com.xr.treehole.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.xr.treehole.service.NodeService;
+import com.xr.treehole.service.UserService;
 import com.xr.treehole.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +20,9 @@ public class NodeController {
 
   @Autowired
   NodeService nodeService;
+
+  @Autowired
+  UserService userService;
 
   @GetMapping(path = "/p/node")
   public ModelAndView routeNode(@RequestParam(name = "id", required = true) String nodeId) {
@@ -42,8 +48,11 @@ public class NodeController {
   }
 
   @PostMapping(path = "/p/node/new", consumes = "application/x-www-form-urlencoded")
-  public String postNode(Node node) {
-    System.out.println(node);
+  public String postNode(Node node, HttpServletRequest request) {
+    System.out.println(request);
+    User user = userService.getCurrentUser(request);
+    System.out.println(user);
+    node.setPublisherHash(user.getEmailHash());
     node = nodeService.saveNode(node);
     return "redirect:/p/node?id=" + node.getNodeId();
   }
