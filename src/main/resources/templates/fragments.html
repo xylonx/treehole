@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
+<head th:fragment="head">
+  <title th:text="${pageTitle}">树洞</title>
+
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="../static/css/materialize.min.css" media="screen,projection" />
+  <link type="text/css" rel="stylesheet" href="/css/materialize.min.css" media="screen,projection" />
+  <link type="text/css" rel="stylesheet" href="../static/css/self.css" />
+  <link type="text/css" rel="stylesheet" href="/css/self.css" />
+
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <nav class="light-blue lighten-1" role="navigation" th:fragment="nav">
+    <div class="nav-wrapper container">
+      <a id="logo-container" class="brand-logo" href="#">树洞</a>
+
+      <ul class="right hide-on-med-and-down">
+        <li>
+          <a href="#post-modal" class="waves-effect waves-light btn modal-trigger">
+            发帖
+          </a>
+        </li>
+        <li><a href="./userHomepage.html"> 个人中心 </a></li>
+        <li><a href="#"> 热门贴</a></li>
+      </ul>
+
+      <!-- Modal Structure -->
+      <div id="post-modal" class="modal">
+        <form th:action="@{/p/node/new}" method="post">
+          <div class="modal-content">
+            <div class="input-field">
+              <input type="text" id="nodeTitle" name="nodeTitle" />
+              <label for="nodeTitle">标题</label>
+            </div>
+            <div class="input-field">
+              <textarea placeholder="说点什么吧" id="nodeContent" name="nodeContent" class="materialize-textarea"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <input style="margin: 1em" type="submit" class="modal-close btn-flat" value="发表">
+          </div>
+        </form>
+      </div>
+
+      <ul id="nav-mobile" class="sidenav">
+        <li><a href="#"> 个人中心 </a></li>
+        <li><a href="#"> 热门贴 </a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- content here-->
+
+  <footer class="page-footer black-blue" th:fragment="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">相关页面</h5>
+          <ul>
+            <li><a class="white-text" href="#"> 个人中心 </a></li>
+            <li><a class="white-text" href="#"> 热门贴 </a></li>
+          </ul>
+        </div>
+
+        <!-- FIXME: change it to needed info -->
+        <div class="col l6 s12">
+          <h5 class="white-text">相关页面</h5>
+          <ul>
+            <li><a class="white-text" href="#"> 个人中心 </a></li>
+            <li><a class="white-text" href="#"> 热门贴 </a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-copyright center-align">
+      <div class="container">
+        Powered by
+        <a class="white-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+        | Made by
+        <a class="white-text text-lighten-3" href="http://xylonx.com">Xylonx</a>
+        and
+        <a class="white-text text-lighten-3" href="https://rapiz.me">Rapiz</a>
+      </div>
+    </div>
+
+    <!--JavaScript at end of body for optimized loading-->
+    <script type="text/javascript" src="/js/materialize.min.js"></script>
+    <script type="text/javascript" src="../static/js/materialize.min.js"></script>
+    <script type="text/javascript">
+      M.AutoInit();
+    </script>
+  </footer>
+</body>
+
+</html>

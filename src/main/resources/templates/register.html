@@ -1,22 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-<head>
-    <title>register page</title>
-    <meta charset="utf-8">
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection"/>
-    <link type="text/css" rel="stylesheet" href="css/self.css">
-
-</head>
+<head th:replace="fragments :: head"></head>
 <body>
 
-<div class="head">
-    <div class="content-bar">
-        <ul class="bar-menu">
-            <li class="bar-menu"><a href="/"> 主页面 </a></li>
-            <li class="bar-menu"><a href="/user"> 个人中心 </a></li>
-        </ul>
-    </div>
-</div>
+<nav th:replace="fragments :: nav"></nav>
 
 <div class="log">
     <form th:action="@{/user/register}" method="post">
@@ -36,6 +23,6 @@
 <!--<p th:if="${isUserExist != null && isUserExist}" class="returnInfo">-->
 <!--    the email has been register once. please change!-->
 <!--</p>-->
-
+<footer th:replace="fragments :: footer"></footer>
 </body>
 </html>

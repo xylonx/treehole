@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-</head>
+
+<head th:replace="fragments :: head"></head>
+
 <body>
-
-<h1> this is a error page</h1>
-
+    <nav th:replace="fragments :: nav"></nav>
+    <h1> this is a error page</h1>
+    <footer th:replace="fragments :: footer"></footer>
 </body>
+
 </html>
