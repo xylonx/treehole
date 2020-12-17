@@ -22,19 +22,19 @@
   </div>
 
   <div id="content">
-    <div th:each="node : ${nodes}" class="container z-depth-3">
+    <div th:each="node : ${nodes}" class="container">
       <div class="col s12 m7">
-        <div class="card horizontal light-gray">
-          <div class="card-panel grey lighten-3 z-depth-1-half">
-            <!--<h5 th:text="${node.PublisherHash}">Username</h5>-->
-            <p th:text="${node.PublishTime}"></p>
-          </div>
+        <div class="card horizontal">
+          <!--<h5 th:text="${node.PublisherHash}">Username</h5>-->
           <div class="card-stacked">
             <div class="card-content">
+              <a th:href="@{/p/node(id=${node.NodeId})}"><i th:text="${node.NodeId}" class="nodeId grey-text"></i></a>
+              <span th:text="${node.NodeTitle}" class="card-title nodeTitle"></span>
               <p th:text="${node.NodeContent}"></p>
             </div>
             <div class="card-action">
               <a th:href="@{/p/node(id=${node.NodeId})}">More</a>
+              <a class="post-date" th:text="${node.PublishTime}"></a>
             </div>
           </div>
         </div>

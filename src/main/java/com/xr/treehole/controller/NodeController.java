@@ -1,5 +1,6 @@
 package com.xr.treehole.controller;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,6 +51,7 @@ public class NodeController {
     modelAndView.setViewName("node");
     modelAndView.addObject("node", node.get());
     List<Node> comments = nodeService.GetAllSubNodes(nodeId);
+    Collections.reverse(comments);
     modelAndView.addObject("comments", comments);
     return modelAndView;
   }

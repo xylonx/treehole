@@ -21,3 +21,13 @@
 #content {
     height: 100%;
 }
+
+.nodeId {
+    float: right;
+
+}
+
+.replyform {
+    margin-top: 2em;
+    margin-bottom: 2em;
+}

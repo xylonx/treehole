@@ -20,6 +20,8 @@
             <div th:each="node : ${comments}" class="comment card">
                 <div class="card-stacked">
                     <div class="card-content">
+                        <a th:href="@{/p/node(id=${node.NodeId})}"><i th:text="${node.NodeId}" class="nodeId"></i></a>
+                        <span th:text="${node.NodeTitle}" class="card-title nodeTitle"></span>
                         <p th:text="${node.NodeContent}"></p>
                     </div>
                     <div class="card-action">
@@ -32,16 +34,16 @@
             <form th:action="@{/p/node/reply(id=${node.nodeId})}" method="post">
                 <div class="modal-content">
                     <div class="input-field">
-                        <input type="text" id="nodeTitle" name="nodeTitle" />
-                        <label for="nodeTitle">回复标题</label>
+                        <input type="text" id="nodeTitle" name="nodeTitle" autocomplete="off" placeholder="未命题" />
+                        <label for="nodeTitle">标题</label>
                     </div>
                     <div class="input-field">
-                        <textarea placeholder="说点什么吧" id="nodeContent" name="nodeContent"
-                            class="materialize-textarea"></textarea>
+                        <textarea placeholder="说点什么吧" id="nodeContent" name="nodeContent" class="materialize-textarea"
+                            autocomplete="off"></textarea>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <input style="margin: 1em" type="submit" class="modal-close btn-flat" value="发表">
+                <div>
+                    <input type="submit" class="btn" value="发表">
                 </div>
             </form>
         </div>
