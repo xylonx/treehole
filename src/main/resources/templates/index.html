@@ -35,6 +35,7 @@
             <div class="card-action">
               <a th:href="@{/p/node(id=${node.NodeId})}">More</a>
               <a class="post-date" th:text="${node.PublishTime}"></a>
+              <a style="display:none" th:text="${node.PublishTime}"></a>
             </div>
           </div>
         </div>
