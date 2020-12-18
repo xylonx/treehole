@@ -48,6 +48,17 @@ public class NodeController {
     modelAndView.addObject("nodes", nodes);
     return modelAndView;
   }
+  
+  @GetMapping(path = "/p/node/hotest")
+  public ModelAndView routeHotest(@RequestParam(name = "page", required = false, defaultValue = "0") int page, HttpServletRequest request) {
+    ModelAndView modelAndView = new ModelAndView();
+    modelAndView.setViewName("index");
+    final int PAGE_LEN = 10;
+    List<Node> nodes = nodeService.getHotestPostsWithinRange(page * PAGE_LEN, (PAGE_LEN + 1) * 10);
+    fillHasThumbedUp(userService.getCurrentUser(request), nodes);
+    modelAndView.addObject("nodes", nodes);
+    return modelAndView;
+  }
 
   private void fillHasThumbedUp(User user, List<Node> nodes) {
     for (Node node : nodes) {

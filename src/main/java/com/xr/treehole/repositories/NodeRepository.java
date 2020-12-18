@@ -11,6 +11,7 @@ import java.util.List;
 @Repository
 public interface NodeRepository extends JpaRepository<Node, String> {
     List<Node> findByNodeDepthOrderByPublishTimeDesc(int nodeDepth);
+    List<Node> findByNodeDepthOrderByThumbUpNumberDesc(int nodeDepth);
 
     List<Node> getAllByNodeDepthAndPublisherHash(int nodeDepth, String publisherHash);
   List<Node> findByNodeDepthOrderByPublishTimeAsc(int nodeDepth);
