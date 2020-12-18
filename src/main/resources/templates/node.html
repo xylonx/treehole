@@ -26,7 +26,11 @@
                     </div>
                     <div class="card-action">
                         <a th:href="@{/p/node/reply(id=${node.NodeId})}">Reply</a>
-                        <a class="post-date" data:timestamp="${node.PublishTime}" th:text="${node.PublishTime}"></a>
+                        <a class="post-date" th:text="${node.PublishTime}"></a>
+                        <span class="post-thumbup-container badge">
+                            <i class="material-icons prefix thumb-up-icon">thumb_up</i>
+                            <a class="post-thumbup" th:text="${node.ThumbUpNumber}"></a>
+                        </span>
                     </div>
                 </div>
             </div>
