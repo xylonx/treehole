@@ -35,6 +35,22 @@
     filter: brightness(1.2);
 }
 
+.nodeId, .parentNodeId {
+    display: inline-flex;
+    max-width: 5em;
+    overflow: hidden;
+    text-overflow: clip;
+    transition: max-width;
+}
+
+.nodeId:hover, .parentNodeId:hover {
+    max-width: none;
+}
+
+.index.nodeId, .index.parentNodeId {
+    max-width: none !important;
+}
+
 .replyform {
     margin-top: 2em;
     margin-bottom: 2em;

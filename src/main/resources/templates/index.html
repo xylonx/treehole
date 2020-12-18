@@ -29,7 +29,7 @@
           <div class="card-stacked">
             <div class="card-content">
               <span class="node-id-container grey-text">
-                <a th:href="@{/p/node(id=${node.NodeId})}"><i th:text="${node.NodeId}" class="nodeId"></i></a>
+                <a th:href="@{/p/node(id=${node.NodeId})}"><i th:text="${node.NodeId}" class="nodeId index"></i></a>
               </span>
               <span th:text="${node.NodeTitle}" class="card-title nodeTitle"></span>
               <p th:text="${node.NodeContent}"></p>
