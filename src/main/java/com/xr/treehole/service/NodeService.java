@@ -63,6 +63,7 @@ public class NodeService {
         String nodeId = GenerateId.GenerateIdWithTime(node.getNodeContent(), node.getPublisherHash());
         node.setNodeId(nodeId);
         node.setParentNodeId(parentId);
+        node.setRootNodeId(nodeId);
 
         int nodeDepth = 0;
         long now = Instant.now().getEpochSecond();
@@ -82,6 +83,7 @@ public class NodeService {
             }
             Node parent = optionalNode.get();
             nodeDepth = parent.getNodeDepth() + 1;
+            node.setRootNodeId(parent.getRootNodeId());
 
             List<NodeTreePath> paths = nodeTreePathRepository.findAllByDescendantId(parentId);
             for (NodeTreePath path : paths) {

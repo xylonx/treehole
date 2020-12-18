@@ -27,6 +27,8 @@ public class Node {
 
     private String parentNodeId;
 
+    private String rootNodeId;
+
     @Transient
     private boolean hasThumbedUp;
 }
