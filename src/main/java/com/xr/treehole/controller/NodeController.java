@@ -127,6 +127,6 @@ public class NodeController {
     System.out.println(user);
     node.setPublisherHash(user.getEmailHash());
     node = nodeService.saveNode(parentId, node);
-    return "redirect:/p/node?id=" + node.getNodeId();
+    return "redirect:/p/node?id=" + node.getRootNodeId() + "#" + node.getNodeId();
   }
 }
