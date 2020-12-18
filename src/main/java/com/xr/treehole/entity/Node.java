@@ -25,6 +25,8 @@ public class Node {
 
     private int nodeDepth;
 
+    private String parentNodeId;
+
     @Transient
     private boolean hasThumbedUp;
 }

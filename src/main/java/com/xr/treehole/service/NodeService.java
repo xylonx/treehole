@@ -62,6 +62,7 @@ public class NodeService {
 
         String nodeId = GenerateId.GenerateIdWithTime(node.getNodeContent(), node.getPublisherHash());
         node.setNodeId(nodeId);
+        node.setParentNodeId(nodeId);
 
         int nodeDepth = 0;
         long now = Instant.now().getEpochSecond();
@@ -75,6 +76,7 @@ public class NodeService {
         savedNodeTP.add(selfCircle);
 
         if (parentId != null) {
+            node.setParentNodeId(parentId);
             Optional<Node> optionalNode = nodeRepository.findById(parentId);
             if (optionalNode.isEmpty()) {
                 return null;
