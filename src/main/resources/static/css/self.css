@@ -1,3 +1,7 @@
+body {
+    min-height: 100vh;
+}
+
 .light-gray {
     background-color: #e5e5e5;
 }
