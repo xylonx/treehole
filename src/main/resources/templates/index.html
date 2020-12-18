@@ -28,7 +28,9 @@
           <!--<h5 th:text="${node.PublisherHash}">Username</h5>-->
           <div class="card-stacked">
             <div class="card-content">
-              <a th:href="@{/p/node(id=${node.NodeId})}"><i th:text="${node.NodeId}" class="nodeId grey-text"></i></a>
+              <span class="node-id-container grey-text">
+                <a th:href="@{/p/node(id=${node.NodeId})}"><i th:text="${node.NodeId}" class="nodeId"></i></a>
+              </span>
               <span th:text="${node.NodeTitle}" class="card-title nodeTitle"></span>
               <p th:text="${node.NodeContent}"></p>
             </div>

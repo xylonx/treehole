@@ -23,9 +23,16 @@
     margin-top: 1em;
 }
 
-.nodeId {
+.node-id-container {
     float: right;
+}
 
+.node-id-container a {
+    color: inherit;
+}
+
+.node-id-container a:hover {
+    filter: brightness(1.2);
 }
 
 .replyform {
