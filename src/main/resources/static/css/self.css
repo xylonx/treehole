@@ -32,3 +32,9 @@
     margin-top: 2em;
     margin-bottom: 2em;
 }
+
+.post-thumbup-container {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+}

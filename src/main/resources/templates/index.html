@@ -35,6 +35,10 @@
             <div class="card-action">
               <a th:href="@{/p/node(id=${node.NodeId})}">More</a>
               <a class="post-date" th:text="${node.PublishTime}"></a>
+              <span class="post-thumbup-container">
+                <i class="material-icons prefix">thumb_up</i>
+                <a class="post-thumbup" th:text="${node.ThumbUpNumber}"></a>
+              </span>
               <a style="display:none" th:text="${node.PublishTime}"></a>
             </div>
           </div>
