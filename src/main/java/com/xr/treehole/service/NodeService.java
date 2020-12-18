@@ -31,8 +31,8 @@ public class NodeService {
     ThumbUpRepository thumbUpRepository;
 
     public boolean hasThumbedUpNode(User user, Node node) {
-       Optional<ThumbUp> tb = thumbUpRepository.findOneByEmailHashAndNodeId(user.getEmailHash(), node.getNodeId());
-       return tb.isPresent();
+       List<ThumbUp> tb = thumbUpRepository.findByEmailHashAndNodeId(user.getEmailHash(), node.getNodeId());
+       return !tb.isEmpty();
     }
 
     public boolean thumbUpNode(User user, Node node) {

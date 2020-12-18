@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 @Data
@@ -23,4 +24,7 @@ public class Node {
     private String publisherHash;
 
     private int nodeDepth;
+
+    @Transient
+    private boolean hasThumbedUp;
 }

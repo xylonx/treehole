@@ -6,3 +6,19 @@ document.addEventListener("DOMContentLoaded", function(event) {
     e.innerHTML = new Date(timestamp).toLocaleString();
   }
 });
+
+function thumbup(e) {
+  console.log(e);
+  e.classList.add("thumbed-up");
+  var nodeId = e.getAttribute('data-nodeid');
+  var url = '/p/node/thumbUp?id=' + nodeId;
+  console.log(nodeId);
+  $.get(
+    url,
+    {},
+    function(data) {
+      console.log(data);
+      e.classList.add('thumbed-up');
+    }
+  )
+}

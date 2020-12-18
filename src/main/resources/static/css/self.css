@@ -34,16 +34,27 @@
 }
 
 .post-thumbup-container {
-    display: inline-flex;
-    align-items: center;
-    vertical-align: middle;
     cursor: pointer;
 }
 
-.post-thumbup-container :hover {
+.post-thumbup-container>div {
+    display: inline-block;
+}
+
+.post-thumbup-container>div>div {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+}
+
+.post-thumbup-container>div:hover {
     filter: brightness(1.2);
 }
 
 .thumb-up-icon {
     margin-right: 0.2rem;
+}
+
+.thumbed-up {
+    color: #ffab40 !important;
 }

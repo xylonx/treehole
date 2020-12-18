@@ -1,6 +1,6 @@
 package com.xr.treehole.repositories;
 
-import java.util.Optional;
+import java.util.List;
 
 import com.xr.treehole.entity.ThumbUp;
 
@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ThumbUpRepository extends JpaRepository<ThumbUp, Integer> {
-  Optional<ThumbUp> findOneByEmailHashAndNodeId(String emailHash, String NodeId);
+  List<ThumbUp> findByEmailHashAndNodeId(String emailHash, String NodeId);
 }

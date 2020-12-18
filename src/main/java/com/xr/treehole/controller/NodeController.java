@@ -27,17 +27,24 @@ public class NodeController {
   UserService userService;
 
   @GetMapping(path = "/index")
-  public ModelAndView routeIndex(@RequestParam(name = "page", required = false, defaultValue = "0") int page) {
+  public ModelAndView routeIndex(@RequestParam(name = "page", required = false, defaultValue = "0") int page, HttpServletRequest request) {
     ModelAndView modelAndView = new ModelAndView();
     modelAndView.setViewName("index");
     final int PAGE_LEN = 10;
     List<Node> nodes = nodeService.getPostsWithinRange(page * PAGE_LEN, (PAGE_LEN + 1) * 10);
+    fillHasThumbedUp(userService.getCurrentUser(request), nodes);
     modelAndView.addObject("nodes", nodes);
     return modelAndView;
   }
 
+  private void fillHasThumbedUp(User user, List<Node> nodes) {
+    for (Node node : nodes) {
+      node.setHasThumbedUp(nodeService.hasThumbedUpNode(user, node));
+    }
+  }
+
   @GetMapping(path = "/p/node")
-  public ModelAndView routeNode(@RequestParam(name = "id", required = true) String nodeId) {
+  public ModelAndView routeNode(@RequestParam(name = "id", required = true) String nodeId, HttpServletRequest request) {
     Optional<Node> node = nodeService.getNodeById(nodeId);
     ModelAndView modelAndView = new ModelAndView();
     if (node.isEmpty()) {
@@ -48,6 +55,7 @@ public class NodeController {
     modelAndView.addObject("node", node.get());
     List<Node> comments = nodeService.GetAllSubNodes(nodeId);
     modelAndView.addObject("comments", comments);
+    fillHasThumbedUp(userService.getCurrentUser(request), comments);
     return modelAndView;
   }
 
@@ -60,7 +68,7 @@ public class NodeController {
   }
 
   @GetMapping(path = "/p/node/reply")
-  public ModelAndView routeReply(@RequestParam(name = "id", required = true) String nodeId) {
+  public ModelAndView routeReply(@RequestParam(name = "id", required = true) String nodeId, HttpServletRequest request) {
     Optional<Node> node = nodeService.getNodeById(nodeId);
     ModelAndView modelAndView = new ModelAndView();
     if (node.isEmpty()) {
@@ -72,19 +80,20 @@ public class NodeController {
     List<Node> comments = new ArrayList<>();
     comments.add(node.get());
     modelAndView.addObject("comments", comments);
+    fillHasThumbedUp(userService.getCurrentUser(request), comments);
     return modelAndView;
   }
 
-  @PostMapping(path = "/p/node/thumbUp")
+  @GetMapping(path = "/p/node/thumbUp")
   public String thumbUp(@RequestParam(name = "id", required = true) String nodeId, HttpServletRequest request) {
     Optional<Node> node = nodeService.getNodeById(nodeId);
     if (node.isEmpty()) {
       return "error";
     }
     if (nodeService.thumbUpNode(userService.getCurrentUser(request), node.get())) {
-      return "success";
+      return "index";
     }
-    return "failure";
+    return "error";
   }
 
   @PostMapping(path = "/p/node/reply", consumes = "application/x-www-form-urlencoded")
