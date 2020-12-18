@@ -122,9 +122,7 @@ public class NodeController {
 
   @PostMapping(path = "/p/node/reply", consumes = "application/x-www-form-urlencoded")
   public String replyNode(Node node, @RequestParam(name="id", required=true) String parentId, HttpServletRequest request) {
-    System.out.println(request);
     User user = userService.getCurrentUser(request);
-    System.out.println(user);
     node.setPublisherHash(user.getEmailHash());
     node = nodeService.saveNode(parentId, node);
     return "redirect:/p/node?id=" + node.getRootNodeId() + "#" + node.getNodeId();
