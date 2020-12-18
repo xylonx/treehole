@@ -37,4 +37,13 @@
     display: inline-flex;
     align-items: center;
     vertical-align: middle;
+    cursor: pointer;
+}
+
+.post-thumbup-container :hover {
+    filter: brightness(1.2);
+}
+
+.thumb-up-icon {
+    margin-right: 0.2rem;
 }
