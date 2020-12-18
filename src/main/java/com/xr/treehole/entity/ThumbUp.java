@@ -1,6 +1,6 @@
 package com.xr.treehole.entity;
 
-import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -10,7 +10,7 @@ import javax.persistence.Id;
 
 @Entity
 @Data
-@AllArgsConstructor
+@NoArgsConstructor
 public class ThumbUp {
   @Id  
   @GeneratedValue(strategy = GenerationType.AUTO)  

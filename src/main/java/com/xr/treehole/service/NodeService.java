@@ -31,7 +31,7 @@ public class NodeService {
     ThumbUpRepository thumbUpRepository;
 
     public boolean hasThumbedUpNode(User user, Node node) {
-       Optional<ThumbUp> tb = thumbUpRepository.findOneByEmailHashAndNodeId(user.getEmialHash(), node.getNodeId());
+       Optional<ThumbUp> tb = thumbUpRepository.findOneByEmailHashAndNodeId(user.getEmailHash(), node.getNodeId());
        return tb.isPresent();
     }
 
@@ -45,7 +45,9 @@ public class NodeService {
        nodeInDb.setThumbUpNumber(nodeInDb.getThumbUpNumber() + 1);
        nodeRepository.save(nodeInDb);
 
-       ThumbUp tb = new ThumbUp(user.getEmialHash(), node.getNodeId());
+       ThumbUp tb = new ThumbUp();
+       tb.setEmailHash(user.getEmailHash());
+       tb.setNodeId(node.getNodeId());
        thumbUpRepository.save(tb);
 
        return true; 
