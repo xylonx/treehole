@@ -61,6 +61,7 @@ public class NodeController {
   }
 
   private void fillHasThumbedUp(User user, List<Node> nodes) {
+    if (nodes == null) return;
     for (Node node : nodes) {
       node.setHasThumbedUp(nodeService.hasThumbedUpNode(user, node));
     }
