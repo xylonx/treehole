@@ -17,8 +17,12 @@ function thumbup(e) {
     url,
     {},
     function(data) {
-      console.log(data);
+      data = String(data);
+      if (data.indexOf('error') >= 0) return;
       e.classList.add('thumbed-up');
+      nume = $(e).find('.post-thumbup')[0];
+      tb = Number(nume.text);
+      nume.text = tb+1;
     }
   )
 }
