@@ -14,4 +14,6 @@ public interface NodeRepository extends JpaRepository<Node, String> {
 
     List<Node> getAllByNodeDepthAndPublisherHash(int nodeDepth, String publisherHash);
   List<Node> findByNodeDepthOrderByPublishTimeAsc(int nodeDepth);
+
+    List<Node> findByPublisherHash(String publisherHash);
 }

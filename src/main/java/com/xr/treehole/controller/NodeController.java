@@ -37,6 +37,18 @@ public class NodeController {
     return modelAndView;
   }
 
+  @GetMapping(path = "/p/userHomepage")
+  public ModelAndView routeHomepage(@RequestParam(name = "page", required = false, defaultValue = "0") int page, HttpServletRequest request) {
+    ModelAndView modelAndView = new ModelAndView();
+    modelAndView.setViewName("index");
+    final int PAGE_LEN = 100;
+    List<Node> nodes = nodeService.getNodeByUser(userService.getCurrentUser(request));
+    nodes = nodes.subList(0, Math.min(nodes.size(), PAGE_LEN));
+    fillHasThumbedUp(userService.getCurrentUser(request), nodes);
+    modelAndView.addObject("nodes", nodes);
+    return modelAndView;
+  }
+
   private void fillHasThumbedUp(User user, List<Node> nodes) {
     for (Node node : nodes) {
       node.setHasThumbedUp(nodeService.hasThumbedUpNode(user, node));

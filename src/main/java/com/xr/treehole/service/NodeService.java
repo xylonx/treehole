@@ -159,6 +159,10 @@ public class NodeService {
         return nodes.subList(start, Math.min(nodes.size(), end));
     }
 
+    public List<Node> getNodeByUser(User user) {
+        return nodeRepository.findByPublisherHash(user.getEmailHash());
+    }
+
     public List<Node> getArticleNodeList(String emailHashed) {
         return nodeRepository.getAllByNodeDepthAndPublisherHash(0, emailHashed);
     }
