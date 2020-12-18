@@ -37,6 +37,10 @@
     cursor: pointer;
 }
 
+.post-thumbup-container * {
+    user-select: none;
+}
+
 .post-thumbup-container>div {
     display: inline-block;
 }
