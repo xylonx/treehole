@@ -1,11 +1,13 @@
 package com.xr.treehole.controller;
 
 
+import com.xr.treehole.constant.ErrorType;
 import com.xr.treehole.entity.User;
 import com.xr.treehole.middleware.jwt.JwtUtils;
 import com.xr.treehole.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,13 +71,13 @@ public class UserController {
 
     @PostMapping(path = "/register-code")
     @ResponseBody
-    public void SendRegisterCode(String emailAddress) {
+    public String SendRegisterCode(String emailAddress) {
+        if (!userService.isPostfixValid(emailAddress) || userService.isUserExist(emailAddress)) {
+            return ErrorType.RE_REGISTER.getStr();
 
-        if (!userService.isPostfixValid(emailAddress)) {
-            return;
         }
-
         userService.SendRegisterCode(emailAddress);
+        return "ok";
     }
 
 

@@ -6,7 +6,8 @@ import lombok.Data;
 @AllArgsConstructor
 public enum  ErrorType {
 
-    NOT_LOGIN("not login");
+    NOT_LOGIN("not login"),
+    RE_REGISTER("re register");
 
     private String str;
 

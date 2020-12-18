@@ -56,22 +56,9 @@
     </div>
 </div>
 
-<footer th:replace="fragments :: footer"></footer>
-</footer>
+<footer th:replace="fragments :: footer"></footer></footer>
 <!--JavaScript at end of body for optimized loading-->
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#GetRegisterCode").click(function () {
-            var emailAddress = $("#emailAddress").val()
-            $.post(
-                "/user/register-code",
-                {
-                    emailAddress: emailAddress,
-                }
-            )
-        })
-    })
-</script>
+<script type="text/javascript" src="/static/js/register.js"></script>
 </body>
 
 </html>
