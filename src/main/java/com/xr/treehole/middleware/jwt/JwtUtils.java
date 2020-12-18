@@ -3,7 +3,6 @@ package com.xr.treehole.middleware.jwt;
 import com.xr.treehole.config.selfdef.JwtConfig;
 import com.xr.treehole.util.Encrypt;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,16 +32,27 @@ public class JwtUtils {
 
     Date exp;
 
+    Date reissueTime;
+
     @Autowired
     public JwtUtils(JwtConfig jwtConfig){
         secretKey = new SecretKeySpec(jwtConfig.getSecret().getBytes(), SignatureAlgorithm.HS256.getJcaName());
         exp = new Date(System.currentTimeMillis() + jwtConfig.getExpTime());
+        reissueTime = new Date(System.currentTimeMillis() + jwtConfig.getExpTime() - jwtConfig.getReissueDuration());
     }
 
     public String GenerateToken(Map<String, Object> claims) {
 
         return Jwts.builder()
                 .setClaims(claims)  // set claims
+                .signWith(secretKey)
+                .setExpiration(exp)
+                .compact();
+    }
+
+    public String GenerateToken(Claims claims){
+        return Jwts.builder()
+                .setClaims(claims)
                 .signWith(secretKey)
                 .setExpiration(exp)
                 .compact();
@@ -72,6 +82,15 @@ public class JwtUtils {
             return false;
         }
 
+    }
+
+    public boolean shouldReissue(String token){
+        try {
+            return GetClaimsFromToken(token).getExpiration().after(reissueTime)
+                    && GetClaimsFromToken(token).getExpiration().before(exp);
+        }catch (Exception e){
+            return false;
+        }
     }
 
     public String getUsername(String token){

@@ -1,6 +1,7 @@
 package com.xr.treehole.middleware.jwt;
 
 import com.xr.treehole.service.SecurityUserDetailService;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,11 +22,11 @@ import java.io.IOException;
 /**
  * classname: jwtauthorizationtokenfilter
  * function : implement the authentication and authorization
- *
+ * <p>
  * decide which resources should be used by which purview is decided in config.security.SecurityConfig
  */
 @Component
-public class JwtAuthorizationTokenFilter extends OncePerRequestFilter{
+public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
 
     @Autowired
     JwtUtils jwtUtils;
@@ -45,14 +46,20 @@ public class JwtAuthorizationTokenFilter extends OncePerRequestFilter{
 //        String token = header.split(" ")[1].trim();
 
         Cookie[] cookies = httpServletRequest.getCookies();
+        if (cookies == null){
+            filterChain.doFilter(httpServletRequest, httpServletResponse);
+            return;
+        }
+
         Cookie jwtCookie = null;
-        for (Cookie cookie : cookies){
-            if (cookie.getName().equals(jwtUtils.CookieName)){
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals(jwtUtils.CookieName)) {
                 jwtCookie = cookie;
+                break;
             }
         }
 
-        if (jwtCookie == null){
+        if (jwtCookie == null) {
             filterChain.doFilter(httpServletRequest, httpServletResponse);
             return;
         }
@@ -60,7 +67,14 @@ public class JwtAuthorizationTokenFilter extends OncePerRequestFilter{
         String token = jwtCookie.getValue();
 
 
-        if (!jwtUtils.Validate(token)){
+        // refresh JWT token
+        if (jwtUtils.shouldReissue(token)) {
+            Claims claims = jwtUtils.GetClaimsFromToken(token);
+            String newToken = jwtUtils.GenerateToken(claims);
+            jwtCookie.setValue(newToken);
+        }
+
+        if (!jwtUtils.Validate(token)) {
             filterChain.doFilter(httpServletRequest, httpServletResponse);
             return;
         }
