@@ -62,7 +62,7 @@ public class UserController {
             return "redirect:/user/register";
         }
 
-        user = userService.saveUser(user);
+        userService.saveUser(user);
         jwtUtils.IssueJwtTokenInCookie(response, user.getEmailAddress());
         return "redirect:/index";
     }
