@@ -3,7 +3,9 @@ package com.xr.treehole.service;
 import com.xr.treehole.entity.NodeTreePath;
 import com.xr.treehole.entity.ThumbUp;
 import com.xr.treehole.entity.User;
+import com.xr.treehole.entity.NicknameRelation;
 import com.xr.treehole.entity.Node;
+import com.xr.treehole.repositories.NicknameRelationRepository;
 import com.xr.treehole.repositories.NodeRepository;
 import com.xr.treehole.repositories.NodeTreePathRepository;
 import com.xr.treehole.repositories.ThumbUpRepository;
@@ -20,6 +22,8 @@ import java.util.Optional;
 
 @Service
 public class NodeService {
+    @Autowired
+    NicknameRelationRepository nicknameRelationRepository;
 
     @Autowired
     NodeRepository nodeRepository;
@@ -96,6 +100,21 @@ public class NodeService {
         }
 
         node.setNodeDepth(nodeDepth);
+
+        // set nickname
+
+        Optional<NicknameRelation> nicknameRelation = nicknameRelationRepository.findByEmailHashAndRootNodeId(node.getPublisherHash(), node.getRootNodeId());
+        if (nicknameRelation.isPresent()) {
+            node.setPublisherNickname(nicknameRelation.get().getNickname());
+        }
+        else {
+            NicknameRelation nr = new NicknameRelation();
+            nr.setEmailHash(node.getPublisherHash());
+            nr.setRootNodeId(node.getRootNodeId());
+            nr.setNickname(GenerateId.GenerateNickname());
+            node.setPublisherNickname(nr.getNickname());
+            nicknameRelationRepository.save(nr);
+        }
 
         nodeRepository.save(node);
 

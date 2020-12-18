@@ -21,11 +21,12 @@
                 <div class="card-stacked">
                     <div class="card-content">
                         <span class="node-id-container grey-text">
-                            <a th:if="${node.parentNodeId}" th:href="'#' + ${node.parentNodeId}"><i
-                                    th:text="${node.parentNodeId}" class="parentNodeId"></i></a>
-                            <span th:if="${node.parentNodeId}" th:text="'<'" class="reply-mark"></span>
+                            <span class="node-publisher-nickname" th:text="${node.publisherNickname} + ' 写道 '"></span>
                             <a th:id="${node.NodeId}" th:href="@{/p/node(id=${node.NodeId})}"><i
                                     th:text="${node.NodeId}" class="nodeId"></i></a>
+                            <i th:if="${node.parentNodeId}" th:text="'>'" class="reply-mark"></i>
+                            <a th:if="${node.parentNodeId}" th:href="'#' + ${node.parentNodeId}"><i
+                                    th:text="${node.parentNodeId}" class="parentNodeId"></i></a>
                         </span>
                         <span th:text="${node.NodeTitle}" class="card-title nodeTitle"></span>
                         <p th:text="${node.NodeContent}"></p>

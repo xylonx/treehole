@@ -23,6 +23,8 @@ public class Node {
 
     private String publisherHash;
 
+    private String publisherNickname;
+
     private int nodeDepth;
 
     private String parentNodeId;

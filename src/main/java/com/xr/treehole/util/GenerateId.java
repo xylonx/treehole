@@ -39,6 +39,6 @@ public class GenerateId {
     }
     
     public static String GenerateNickname() {
-        return readableNames[(int)Math.floor(Math.random()*(readableNames.length))] + GenerateRandomId(5, true, true);
+        return readableNames[(int)Math.floor(Math.random()*(readableNames.length))] + GenerateRandomId(4, true, true);
     }
 }
