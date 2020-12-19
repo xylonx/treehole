@@ -182,7 +182,7 @@ public class NodeService {
     }
 
     public List<Node> getHotestPostsWithinRange(int start, int end) {
-        List<Node> nodes = nodeRepository.findByNodeDepthOrderByPublishTimeDesc(0);
+        List<Node> nodes = nodeRepository.findByNodeDepthOrderByThumbUpNumberDesc(0);
         if (start >= nodes.size()) return null;
         return nodes.subList(start, Math.min(nodes.size(), end));
     }
