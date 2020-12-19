@@ -40,7 +40,7 @@
               <a th:href="@{/p/node(id=${node.NodeId})}">More</a>
               <a class="post-date" th:text="${node.PublishTime}"></a>
               <span th:class="'post-thumbup-container badge ' + ${node.hasThumbedUp ? 'thumbed-up' : ''}"
-              th:data-nodeId="${node.nodeId}" th:data-thumbedup="${node.hasThumbedUp}" onclick="thumbup(this)">
+                th:data-nodeId="${node.nodeId}" th:data-thumbedup="${node.hasThumbedUp}" onclick="thumbup(this)">
                 <div>
                   <div>
                     <i class="material-icons prefix thumb-up-icon">thumb_up</i>
@@ -54,13 +54,13 @@
         </div>
       </div>
     </div>
+    <ul class="pagination" th:if="${page != null}">
+      <li class="waves-effect" th:classappend="${page == 0 ? 'disabled' : ''}"><a th:href="@{/index(page=${page}-1)}"><i
+            class="material-icons">chevron_left</i></a></li>
+      <li class="active"><a href="#!" th:text="${page}+1">1</a></li>
+      <li class="waves-effect"><a th:href="@{/index(page=${page}+1)}"><i class="material-icons">chevron_right</i></a></li>
+    </ul>
   </div>
-
-  <ul class="pagination">
-    <li class="waves-effect" th:classappend="${page == 0 ? 'disabled' : ''}"><a href="@{/index(page=${page}-1)}"><i class="material-icons">chevron_left</i></a></li>
-    <li class="active"><a href="#!" th:text="${page}">1</a></li>
-    <li class="waves-effect"><a href="@{/index(page=${page}+1)}"><i class="material-icons">chevron_right</i></a></li>
-  </ul>
 
   <footer th:replace="fragments :: footer"></footer>
 </body>

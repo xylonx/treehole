@@ -34,6 +34,7 @@ public class NodeController {
     List<Node> nodes = nodeService.getPostsWithinRange(page * PAGE_LEN, (PAGE_LEN + 1) * 10);
     fillHasThumbedUp(userService.getCurrentUser(request), nodes);
     modelAndView.addObject("nodes", nodes);
+    modelAndView.addObject("page", page);
     return modelAndView;
   }
 
