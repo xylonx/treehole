@@ -9,39 +9,35 @@
 
 <div class="signHomepage">
     <div class="container">
-        <div class="row">
-            <div class="col s12 m4 l2"></div>
-            <div class="col s12 m4 l8">
-                <form class="col s12 login" action="/user/login" method="post">
-                    <div class="row">
-                        <div class="input-field col s6">
-                            <i class="material-icons prefix">email</i>
-                            <input id="emailAddress" type="email" name="emailAddress" class="validate">
-                            <label for="emailAddress">Email Address</label>
-                        </div>
-
+        <div class="row center-align log-box-max-width">
+            <form class="col s8 offset-s2 login" action="/user/login" method="post">
+                <div class="row">
+                    <div class="input-field">
+                        <i class="material-icons prefix">email</i>
+                        <input id="emailAddress" type="email" name="emailAddress" class="validate">
+                        <label for="emailAddress">Email Address</label>
                     </div>
+                </div>
 
-                    <div class="row">
-                        <div class="input-field col s6">
-                            <i class="material-icons prefix">fingerprint</i>
-                            <input id="password" type="password" name="password" class="validate">
-                            <label for="password">Password</label>
-                        </div>
+                <div class="row">
+                    <div class="input-field ">
+                        <i class="material-icons prefix">fingerprint</i>
+                        <input id="password" type="password" name="password" class="validate">
+                        <label for="password">Password</label>
                     </div>
+                </div>
 
-                    <div class="col s12 m6 l3">
+                <div class="row">
+                    <div class="col s6">
                         <a class="btn waves-effect waves-light" href="/user/register">注册</a>
                     </div>
-                    <div class="col s12 m6 l3">
+                    <div class="col s6">
                         <i class="btn waves-effect waves-light waves-input-wrapper">
                             <input type="submit" class="white-text" value="登录">
                         </i>
                     </div>
-
-                </form>
-            </div>
-            <div class="col s12 m4 l2"></div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
