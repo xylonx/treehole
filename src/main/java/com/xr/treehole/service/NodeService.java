@@ -161,6 +161,10 @@ public class NodeService {
 
         List<Node> nodes = nodeRepository.findAllById(nodeIds);
 
+        for (Node node : nodes) {
+            node.setRepliesNumber(nodeTreePathRepository.findAllByAncestorId(node.getNodeId()).size());
+        }
+
         nodes.sort(new Comparator<Node>() {
             @Override
             public int compare(Node o1, Node o2) {
@@ -178,13 +182,21 @@ public class NodeService {
     public List<Node> getPostsWithinRange(int start, int end) {
         List<Node> nodes = nodeRepository.findByNodeDepthOrderByPublishTimeDesc(0);
         if (start >= nodes.size()) return null;
-        return nodes.subList(start, Math.min(nodes.size(), end));
+        nodes = nodes.subList(start, Math.min(nodes.size(), end));
+        for (Node node : nodes) {
+            node.setRepliesNumber(nodeTreePathRepository.findAllByAncestorId(node.getNodeId()).size());
+        }
+        return nodes;
     }
 
     public List<Node> getHotestPostsWithinRange(int start, int end) {
         List<Node> nodes = nodeRepository.findByNodeDepthOrderByThumbUpNumberDesc(0);
         if (start >= nodes.size()) return null;
-        return nodes.subList(start, Math.min(nodes.size(), end));
+        nodes = nodes.subList(start, Math.min(nodes.size(), end));
+        for (Node node : nodes) {
+            node.setRepliesNumber(nodeTreePathRepository.findAllByAncestorId(node.getNodeId()).size());
+        }
+        return nodes;
     }
 
     public List<Node> getNodeByUser(User user) {

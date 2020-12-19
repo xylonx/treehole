@@ -33,4 +33,7 @@ public class Node {
 
     @Transient
     private boolean hasThumbedUp;
+
+    @Transient
+    private int repliesNumber;
 }
