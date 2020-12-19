@@ -56,6 +56,12 @@
     </div>
   </div>
 
+  <ul class="pagination">
+    <li class="waves-effect" th:classappend="${page == 0 ? 'disabled' : ''}"><a href="@{/index(page=${page}-1)}"><i class="material-icons">chevron_left</i></a></li>
+    <li class="active"><a href="#!" th:text="${page}">1</a></li>
+    <li class="waves-effect"><a href="@{/index(page=${page}+1)}"><i class="material-icons">chevron_right</i></a></li>
+  </ul>
+
   <footer th:replace="fragments :: footer"></footer>
 </body>
 
