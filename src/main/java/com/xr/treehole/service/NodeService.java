@@ -176,7 +176,11 @@ public class NodeService {
     }
 
     public Optional<Node> getNodeById(String id) {
-        return nodeRepository.findById(id);
+        Optional<Node> node = nodeRepository.findById(id);
+        if (node.isPresent()) {
+            node.get().setRepliesNumber(nodeTreePathRepository.findAllByAncestorId(node.get().getNodeId()).size());
+        }
+        return node;
     }
 
     public List<Node> getPostsWithinRange(int start, int end) {
