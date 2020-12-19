@@ -89,3 +89,7 @@ body {
 .thumbed-up {
     color: #ffab40 !important;
 }
+
+.log-box-max-width{
+    max-width: 500px;
+}
