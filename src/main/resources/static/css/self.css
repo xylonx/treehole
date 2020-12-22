@@ -96,3 +96,9 @@ body {
 .log-box-max-width{
     max-width: 500px;
 }
+
+.fixed-bottom{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

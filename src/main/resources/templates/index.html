@@ -54,7 +54,7 @@
         </div>
       </div>
     </div>
-    <ul class="pagination" th:if="${page != null}">
+    <ul class="pagination center" th:if="${page != null}">
       <li class="waves-effect" th:classappend="${page == 0 ? 'disabled' : ''}"><a th:href="@{/index(page=${page}-1)}"><i
             class="material-icons">chevron_left</i></a></li>
       <li class="active"><a href="#!" th:text="${page}+1">1</a></li>
