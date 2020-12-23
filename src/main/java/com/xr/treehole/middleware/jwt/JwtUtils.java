@@ -26,19 +26,32 @@ public class JwtUtils {
 
     public final String CookieName = "JwtToken";
 
-    JwtConfig jwtConfig;
 
     Key secretKey;
 
-    Date exp;
+//    Date exp;
 
-    Date reissueTime;
+    long expDuration;
+
+    long reissueDuration;
+
+//    Date reissueTime;
 
     @Autowired
     public JwtUtils(JwtConfig jwtConfig){
         secretKey = new SecretKeySpec(jwtConfig.getSecret().getBytes(), SignatureAlgorithm.HS256.getJcaName());
-        exp = new Date(System.currentTimeMillis() + jwtConfig.getExpTime());
-        reissueTime = new Date(System.currentTimeMillis() + jwtConfig.getExpTime() - jwtConfig.getReissueDuration());
+        expDuration = jwtConfig.getExpTime();
+//        exp = new Date(System.currentTimeMillis() + jwtConfig.getExpTime());
+//        reissueTime = new Date(System.currentTimeMillis() + jwtConfig.getExpTime() - jwtConfig.getReissueDuration());
+        reissueDuration = jwtConfig.getReissueDuration();
+    }
+
+    public Date getExpTime(){
+        return new Date(System.currentTimeMillis() + expDuration);
+    }
+
+    public Date getReissueTime(){
+        return new Date(System.currentTimeMillis() + expDuration - reissueDuration);
     }
 
     public String GenerateToken(Map<String, Object> claims) {
@@ -46,7 +59,7 @@ public class JwtUtils {
         return Jwts.builder()
                 .setClaims(claims)  // set claims
                 .signWith(secretKey)
-                .setExpiration(exp)
+                .setExpiration(getExpTime())
                 .compact();
     }
 
@@ -54,7 +67,7 @@ public class JwtUtils {
         return Jwts.builder()
                 .setClaims(claims)
                 .signWith(secretKey)
-                .setExpiration(exp)
+                .setExpiration(getExpTime())
                 .compact();
     }
 
@@ -86,8 +99,8 @@ public class JwtUtils {
 
     public boolean shouldReissue(String token){
         try {
-            return GetClaimsFromToken(token).getExpiration().after(reissueTime)
-                    && GetClaimsFromToken(token).getExpiration().before(exp);
+            return GetClaimsFromToken(token).getExpiration().after(getReissueTime())
+                    && GetClaimsFromToken(token).getExpiration().before(getExpTime());
         }catch (Exception e){
             return false;
         }
