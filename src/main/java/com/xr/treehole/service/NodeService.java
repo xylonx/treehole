@@ -35,26 +35,26 @@ public class NodeService {
     ThumbUpRepository thumbUpRepository;
 
     public boolean hasThumbedUpNode(User user, Node node) {
-       List<ThumbUp> tb = thumbUpRepository.findByEmailHashAndNodeId(user.getEmailHash(), node.getNodeId());
-       return !tb.isEmpty();
+        List<ThumbUp> tb = thumbUpRepository.findByEmailHashAndNodeId(user.getEmailHash(), node.getNodeId());
+        return !tb.isEmpty();
     }
 
     public boolean thumbUpNode(User user, Node node) {
-       if (hasThumbedUpNode(user, node)) return false;
-       Optional<Node> optionalNodeInDb = nodeRepository.findById(node.getNodeId());
-       if (optionalNodeInDb.isEmpty()) return false;
-       // else the node is real
+        if (hasThumbedUpNode(user, node)) return false;
+        Optional<Node> optionalNodeInDb = nodeRepository.findById(node.getNodeId());
+        if (optionalNodeInDb.isEmpty()) return false;
+        // else the node is real
 
-       Node nodeInDb = optionalNodeInDb.get();
-       nodeInDb.setThumbUpNumber(nodeInDb.getThumbUpNumber() + 1);
-       nodeRepository.save(nodeInDb);
+        Node nodeInDb = optionalNodeInDb.get();
+        nodeInDb.setThumbUpNumber(nodeInDb.getThumbUpNumber() + 1);
+        nodeRepository.save(nodeInDb);
 
-       ThumbUp tb = new ThumbUp();
-       tb.setEmailHash(user.getEmailHash());
-       tb.setNodeId(node.getNodeId());
-       thumbUpRepository.save(tb);
+        ThumbUp tb = new ThumbUp();
+        tb.setEmailHash(user.getEmailHash());
+        tb.setNodeId(node.getNodeId());
+        thumbUpRepository.save(tb);
 
-       return true; 
+        return true;
     }
 
     // means it is comment
@@ -106,8 +106,7 @@ public class NodeService {
         Optional<NicknameRelation> nicknameRelation = nicknameRelationRepository.findByEmailHashAndRootNodeId(node.getPublisherHash(), node.getRootNodeId());
         if (nicknameRelation.isPresent()) {
             node.setPublisherNickname(nicknameRelation.get().getNickname());
-        }
-        else {
+        } else {
             NicknameRelation nr = new NicknameRelation();
             nr.setEmailHash(node.getPublisherHash());
             nr.setRootNodeId(node.getRootNodeId());
@@ -204,7 +203,11 @@ public class NodeService {
     }
 
     public List<Node> getNodeByUser(User user) {
-        return nodeRepository.findByPublisherHash(user.getEmailHash());
+        List<Node> nodes = nodeRepository.findByPublisherHash(user.getEmailHash());
+        for (Node node : nodes) {
+            node.setRepliesNumber(nodeTreePathRepository.findAllByAncestorId(node.getNodeId()).size());
+        }
+        return nodes;
     }
 
     public List<Node> getArticleNodeList(String emailHashed) {
